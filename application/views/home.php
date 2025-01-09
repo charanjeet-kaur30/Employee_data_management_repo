@@ -27,7 +27,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><b>About Us</b></a>
+                        <a class="nav-link" href="<?php echo base_url('about')?>"><b>About Us</b></a>
                     </li>
                 </ul>
             </div>
@@ -47,9 +47,9 @@
                         <h4>Employee</h4>
                     </div>
                     <div class="card-body text-center">
-                        <a href="<? base_url('employee/register')?>" class="btn btn-success btn-lg mb-3">Register as Employee</a>
+                        <a href="<?php echo site_url('EmployeeController/register')?>" class="btn btn-success btn-lg mb-3">Register as Employee</a>
                         <br>
-                        <a href="<? base_url('employee/login')?>" class="btn btn-primary btn-lg">Login as Employee</a>
+                        <a href="<?php echo site_url('EmployeeController/login')?>" class="btn btn-primary btn-lg">Login as Employee</a>
                     </div>
                 </div>
             </div>
@@ -61,9 +61,9 @@
                         <h4>Admin</h4>
                     </div>
                     <div class="card-body text-center">
-                        <a href="<? base_url('admin/register')?>" class="btn btn-success btn-lg mb-3">Register as Admin</a>
+                        <a href="<?php echo site_url('AdminController/register')?>" class="btn btn-success btn-lg mb-3">Register as Admin</a>
                         <br>
-                        <a href="<? base_url('admin/login')?>" class="btn btn-danger btn-lg">Login as Admin</a>
+                        <a href="<?php echo site_url('AdminController/login')?>" class="btn btn-danger btn-lg">Login as Admin</a>
                     </div>
                 </div>
             </div>

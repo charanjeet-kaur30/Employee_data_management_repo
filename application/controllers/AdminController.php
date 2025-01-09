@@ -6,6 +6,7 @@ class AdminController extends CI_Controller
    public function __construct()
    {
      parent::__construct();
+     $this->load->helper('url');
    }
 
    public function register()
@@ -16,6 +17,11 @@ class AdminController extends CI_Controller
    public function login()
    {
      $this->load->view('admin/login');
+   }
+
+   public function dashboard()
+   {
+     $this->load->view('admin/dashboard');
    }
 }
 ?>
