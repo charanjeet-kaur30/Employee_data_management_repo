@@ -13,7 +13,8 @@
         <h2 class="text-center">Registration Form</h2>
         <p class="text-center">Please fill in the details below to register.</p>
 
-        <form method="POST" action="<?php echo site_url('AuthController/register'); ?>"> 
+        <form method="POST" action="<?php echo site_url('AuthController/login'); ?>"> 
+        <input type="hidden" name="role" value="<?php echo isset($role_id) ? $role_id : ''; ?>">  <!-- Hidden role field -->    
 
             <!-- Username -->
             <div class="mb-3">
@@ -60,13 +61,13 @@
                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             </div>
 
-             <!-- Role selection -->
+            <!--  Role selection -->
              <div class="mb-3">
                 <label for="role_id" class="form-label">Role:</label>
                 <select class="form-control" id="role_id" name="role_id" required>
                     <option>Select-Role</option>
-                    <option value="1">Admin</option>
-                    <option value="2">Employee</option>
+                    <option value="1" <?php echo (isset($role_id) && $role_id == 1) ? 'selected' : ''; ?>>Admin</option>
+                    <option value="2" <?php echo (isset($role_id) && $role_id == 2) ? 'selected' : ''; ?>>Employee</option>
                 </select>
             </div>
 
@@ -76,7 +77,7 @@
                 <button type="submit" class="btn btn-primary btn-lg">Register</button>
             </div>
 
-            <p class="mt-3 text-center">Already have an account? <a href="<?php echo site_url('EmployeeController/login'); ?>">Login here</a></p>
+            <p class="mt-3 text-center">Already have an account? <a href="<?php echo site_url('AuthController/login'); ?>">Login here</a></p>
 
         </form>
     </div>

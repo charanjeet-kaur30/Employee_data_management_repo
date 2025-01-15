@@ -7,21 +7,14 @@ class AdminController extends CI_Controller
    {
      parent::__construct();
      $this->load->helper('url');
-   }
-
-   public function register()
-   {
-     $this->load->view('admin/register');
-   }
-
-   public function login()
-   {
-     $this->load->view('admin/login');
+     $this->load->helper('cookie'); 
+     $this->load->model('User_model');
    }
 
    public function dashboard()
    {
      $this->load->view('admin/dashboard');
    }
+
 }
 ?>

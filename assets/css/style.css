@@ -19,9 +19,9 @@ html, body {
     max-width: 1400px!important; /*Adjust width for larger screens  */
     flex-grow: 1!important; /*Allow main content to grow and push footer to the bottom */
 }
-/* .container1{
-    max-width: 1400px!important; Adjust width for larger screens  
-} */
+ .sub_container{
+     max-width: 800px!important; /*Adjust width for larger screens   */
+} 
 
 .body .container{
     max-width: 1380px!important;
@@ -61,7 +61,24 @@ footer {
     font-size: 16px !important;
     background-color: #f9f9f9 !important;
     border: 1px solid #ddd !important;
+    margin-bottom: 15px;
 }
+
+    .form-label {
+        margin-bottom: -0.5rem !important;
+        font-size: 18px !important;
+    }
+
+     .home_page .mt-5{
+        margin-top: 5rem!important;
+    }
+
+    
+    .dashboard .mt-5 {
+            margin-top: 8rem!important;
+        }
+   
+
 
 .form-control:focus {
     border-color: #007bff !important;
@@ -114,6 +131,27 @@ footer {
 .clear {
     display: inline-block!important;
     width: 100%!important;
+}
+
+.register .container{
+    max-width: 800px !important;
+    margin-top: 25px;
+}  
+
+.login .container {
+    max-width: 800px !important;
+    margin-top: 25px !important;   
+}
+.home_page footer {
+    position: absolute !important;
+    bottom: 0px;
+}
+
+
+
+.card .card-body a {
+    margin: 0px auto !important;
+    float: none;
 }
 
 /* Responsive Design */

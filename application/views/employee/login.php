@@ -18,13 +18,13 @@
             <!-- Email -->
             <div>
                 <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email" required>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo get_cookie('email'); ?>" required>
             </div>
 
             <!-- Password -->
             <div>
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
+                <input type="password" class="form-control" id="password" name="password" value="<?php echo get_cookie('password'); ?>" required>
             </div>
 
             <!-- Remember Me Checkbox -->
@@ -34,15 +34,16 @@
             </div>
 
 <div class="clear"></div>
+
             <!-- Submit Button -->
             <div class="d-grid gap-2">
                 <button type="submit"  class="btn btn-primary btn-lg">Login</button>
             </div>
 
             <p class="mt-3 text-center">Don't have an account? <a href="<?php echo site_url('EmployeeController/register'); ?>">Register here</a></p>
-           
+
              <!-- Forgot Password Link -->
-             <p class="mt-2 text-center"><a href="<?php echo site_url('yourController/forgot_password'); ?>">Forgot Password?</a></p>
+             <p class="mt-2 text-center"><a href="<?php echo site_url('LoginController/forgot_password'); ?>">Forgot Password?</a></p>
         </form>
     </div>
 

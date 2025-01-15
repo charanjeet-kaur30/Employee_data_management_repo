@@ -7,18 +7,9 @@ class EmployeeController extends CI_Controller
    {
      parent::__construct();
      $this->load->helper('url');
+     $this->load->helper('cookie'); 
    }
-
-   public function register()
-   {
-     $this->load->view('employee/register');
-   }
-
-   public function login()
-   {
-     $this->load->view('employee/login');
-   }
-
+   
    public function dashboard()
    {
      $this->load->view('employee/dashboard');
