@@ -54,11 +54,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  $route['about'] = 'HomeController/about';
  $route['login'] = 'AuthController/login';
  $route['register'] = 'AuthController/register';
+ $route['register_user'] = 'AuthController/register_user';
+ $route['login_user'] = 'AuthController/login_user';
+
 
 $route['employee/dashboard'] = 'EmployeeController/dashboard';
 $route['employee/dashboard'] = 'EmployeeController/dashboard';
-
-
+$route['migrate'] = 'MigrationController';
+//  echo date("Ymdhis");
 $route['login'] = 'LoginController/login';
 
 $route['404_override'] = '';

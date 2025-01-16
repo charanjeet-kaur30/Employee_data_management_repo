@@ -13,7 +13,7 @@
         <h2 class="text-center">Registration Form</h2>
         <p class="text-center">Please fill in the details below to register.</p>
 
-        <form method="POST" action="<?php echo site_url('AuthController/login'); ?>"> 
+        <form method="POST" action="<?php echo site_url('AuthController/register_user'); ?>"> 
         <input type="hidden" name="role" value="<?php echo isset($role_id) ? $role_id : ''; ?>">  <!-- Hidden role field -->    
 
             <!-- Username -->
@@ -46,7 +46,7 @@
 
             <div class="mb-3">
                 <label for="dob" class="form-label">D.O.B:</label>
-                <input type="text" class="form-control" id="dob" name="dob" required>
+                <input type="date" class="form-control" id="dob" name="dob" required>
             </div>
 
             <!-- Password -->

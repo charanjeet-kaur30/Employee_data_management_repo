@@ -9,6 +9,7 @@ class AuthController extends CI_Controller
         $this->load->helper('url');
         $this->load->model('User_model');
         $this->load->library('session');
+        $this->load->database();
     }
 
     public function register()
@@ -33,6 +34,7 @@ class AuthController extends CI_Controller
         $dob= $this->input->post('dob');
         $confirm_password = $this->input->post('confirm_password');
         $status= $this->input->post('status');
+        $role_id = $this->input->post('role_id');
 
         if ($password !== $confirm_password) 
         {
@@ -54,62 +56,74 @@ class AuthController extends CI_Controller
         'mobile_no'=> $mobile_no,
         'dob'=>  $dob,
         'status'=> $status,
-        'role_id' => $role_id // Set role_id
+        'role_id' => $role_id,
+        'created_at' => date('Y-m-d H:i:s'),
+        'updated_at' => date('Y-m-d H:i:s')
         ];
 
-        // Validate password match
-        if ($this->input->post('password') !== $this->input->post('confirm_password')) 
-        {
-            $this->session->set_flashdata('error', 'Passwords do not match.');
-            redirect('AuthController/register');
-        }
+        print_r($data);
 
+        // // Validate password match
+        // if ($this->input->post('password') !== $this->input->post('confirm_password')) 
+        // {
+        //     $this->session->set_flashdata('error', 'Passwords do not match.');
+        //     redirect('AuthController/register');
+        // }
+
+        $this->load->model('User_model');
+
+        $this->db->insert('users', $data);
+if ($this->db->affected_rows() > 0) {
+    echo "Data inserted successfully!";
+} else {
+    echo "Data insertion failed!";
+}
         // Insert user into the database
-        if ($this->User_model->insert_user($data)) 
-        {
-            $this->session->set_flashdata('message', 'Registration successful. Please login.');
-            redirect('AuthController/login');
-        } 
-        else 
-        {
-            $this->session->set_flashdata('error', 'Registration failed. Please try again.');
-            redirect('AuthController/register');
-        }
+        // if ($this->User_model->insert_user($data)) 
+        // {
+        //     $this->session->set_flashdata('message', 'Registration successful. Please login.');
+        //     redirect('AuthController/login');
+        // } 
+        // else 
+        // {
+        //     $this->session->set_flashdata('error', 'Registration failed. Please try again.');
+        //     redirect('AuthController/register');
+        // }
     }
 
-    // Login Method_______________________________________
-    public function login_user()
-   {
-        $role_id = $this->input->post('role_id');
-        $email = $this->input->post('email');
-        $password = $this->input->post('password');
+//      Login Method_______________________________________
+//     public function login_user()
+//    {
+//         $role_id = $this->input->post('role_id');
+//         $email = $this->input->post('email');
+//         $password = $this->input->post('password');
 
-    $user = $this->User_model->get_user_by_email($email);
+//     $user = $this->User_model->get_user_by_email($email);
 
-    if ($user && password_verify($password, $user['password'])) 
-    {
-        // Set session data
-        $this->session->set_userdata([
-            'user_id' => $user['id'],
-            'role_id' => $user['role_id'],
-        ]);
+//     if ($user && password_verify($password, $user['password'])) 
+//     {
+//         // Set session data
+//         $this->session->set_userdata([
+//             'user_id' => $user['id'],
+//             'role_id' => $user['role_id'],
+//         ]);
 
-        // Redirect based on role
-        if ($user['role_id'] === 1) 
-        {
-            redirect('AdminController/dashboard');  // Admin Dashboard
-        } 
-        elseif ($user['role_id'] === 2) 
-        {
-            redirect('EmployeeController/dashboard');  // Employee Dashboard
-        }
-    }
-     else 
-     {
-        $this->session->set_flashdata('error', 'Invalid email or password.');
-        redirect('AuthController/login');
-     }
-   }
+//         // Redirect based on role
+//         if ($user['role_id'] === 1) 
+//         {
+//             redirect('AdminController/dashboard');  // Admin Dashboard
+//         } 
+//         elseif ($user['role_id'] === 2) 
+//         {
+//             redirect('EmployeeController/dashboard');  // Employee Dashboard
+//         }
+//     }
+//      else 
+//      {
+//         $this->session->set_flashdata('error', 'Invalid email or password.');
+//         redirect('AuthController/login');
+//      }
+//    }
 
 }
 

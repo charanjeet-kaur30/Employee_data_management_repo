@@ -13,7 +13,7 @@
         <h2 class="text-center">Login Form</h2>
         <p class="text-center">Please enter your credentials to login.</p>
 
-        <form method="POST" action="<?php echo site_url('employee/dashboard'); ?>">
+        <form method="POST" action="<?php echo site_url('AuthController/login_user'); ?>">
             <!-- Email -->
             <div>
                 <label for="email" class="form-label">Email Address</label>
@@ -50,7 +50,7 @@
                 <button type="submit" class="btn btn-primary btn-lg">Login</button>
             </div>
 
-            <p class="mt-3 text-center">Don't have an account? <a href="<?php echo site_url('AuthController/register'); ?>">Register here</a></p>
+            <p class="mt-3 text-center">Don't have an account? <a href="<?php echo site_url('auth/register'); ?>">Register here</a></p>
             
              <!-- Forgot Password Link -->
              <p class="mt-2 text-center"><a href="<?php echo site_url('yourController/forgot_password'); ?>">Forgot Password?</a></p>

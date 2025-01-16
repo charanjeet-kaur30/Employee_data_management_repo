@@ -9,10 +9,14 @@ class User_model extends CI_Model
      $this->load->database();
    } 
    
-    public function insert_user($data)
-    {
-      return $this->db->insert('users', $data);
-    }
+      public function insert_user($data)
+      {
+          // Ensure that data is not empty before attempting to insert
+          if (!empty($data)) {
+              return $this->db->insert('users', $data);
+          }
+          return false;  // Return false if no data was provided
+      }
 
     // Fetch user by email for login
     public function get_user_by_email($email) 
@@ -32,11 +36,11 @@ class User_model extends CI_Model
     //     return false;
     // }
 
-    public function check_login($email, $role)
-    {
-        $query = $this->db->get_where('users', ['email' => $email, 'role' => $role]);
-        return $query->row_array();  // Return user data if found
-    }
+    // public function check_login($email, $role)
+    // {
+    //     $query = $this->db->get_where('users', ['email' => $email, 'role' => $role]);
+    //     return $query->row_array();  // Return user data if found
+    // }
 
     //  Fetch all employees (for admin)
     //  public function get_all_employees()
