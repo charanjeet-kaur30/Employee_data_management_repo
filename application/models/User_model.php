@@ -12,7 +12,8 @@ class User_model extends CI_Model
       public function insert_user($data)
       {
           // Ensure that data is not empty before attempting to insert
-          if (!empty($data)) {
+          if (!empty($data)) 
+          {
               return $this->db->insert('users', $data);
           }
           return false;  // Return false if no data was provided
@@ -25,18 +26,18 @@ class User_model extends CI_Model
         return $query->row_array();
     }
 
-    //   Check login credentials
-    //  public function check_login($email, $password) 
-    // {
-    //     $user = $this->get_user_by_email($email);
-    //     if ($user && password_verify($password, $user['password'])) 
-    //     {
-    //         return $user;
-    //     }
-    //     return false;
-    // }
+      //Check login credentials
+    public function check_login($email, $password) 
+    {
+        $user = $this->get_user_by_email($email);
+        if ($user && password_verify($password, $user['password'])) 
+        {
+            return $user;
+        }
+        return false;
+    }
 
-    // public function check_login($email, $role)
+    // public function get_login($email, $role)
     // {
     //     $query = $this->db->get_where('users', ['email' => $email, 'role' => $role]);
     //     return $query->row_array();  // Return user data if found

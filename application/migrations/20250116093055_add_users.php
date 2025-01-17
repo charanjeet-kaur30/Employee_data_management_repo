@@ -46,8 +46,8 @@ class Migration_Add_users extends CI_Migration {
                         ),
                         'status' => array(
                                 'type' => 'ENUM',
-                                'constraint' => ['active', 'pending', 'inactive'],
-                                'default' => 'active'
+                                'constraint' => ['pending', 'approved', 'rejected'],
+                                'default' => 'pending'
                         ),
                         'role_id' => array(
                                 'type' => 'TINYINT',
@@ -56,7 +56,7 @@ class Migration_Add_users extends CI_Migration {
                         ),
                         'created_at' => array(
                                 'type' => 'TIMESTAMP',
-                                'null' => TRUE
+                                'null' => TRUE,
                                 // 'default' => 'CURRENT_TIMESTAMP'
                             ),
                         'updated_at' => array(

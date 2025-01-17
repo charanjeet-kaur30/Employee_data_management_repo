@@ -47,10 +47,10 @@
                         <h4>Employee</h4>
                     </div>
                     <div class="card-body text-center">
-                        <a href="<?php echo site_url('AuthController/register')?>" class="btn btn-success btn-lg mb-3">Register as Employee</a>
+                        <a href="<?php echo site_url('AuthController/register_user')?>" class="btn btn-success btn-lg mb-3">Register as Employee</a>
                         <br>
                         <div class="clear"></div>
-                        <a href="<?php echo site_url('AuthController/login')?>" class="btn btn-primary btn-lg">Login as Employee</a>
+                        <a href="<?php echo site_url('AuthController/login_user')?>" class="btn btn-primary btn-lg">Login as Employee</a>
                     </div>
                 </div>
             </div>
@@ -62,9 +62,9 @@
                         <h4>Admin</h4>
                     </div>
                     <div class="card-body text-center">
-                        <a href="<?php echo site_url('AuthController/register')?>" class="btn btn-success btn-lg mb-3">Register as Admin</a>
+                        <a href="<?php echo site_url('AuthController/register_user')?>" class="btn btn-success btn-lg mb-3">Register as Admin</a>
                         <div class="clear"></div>
-                        <a href="<?php echo site_url('AuthController/login')?>" class="btn btn-danger btn-lg">Login as Admin</a>
+                        <a href="<?php echo site_url('AuthController/login_user')?>" class="btn btn-danger btn-lg">Login as Admin</a>
                     </div>
                 </div>
             </div>

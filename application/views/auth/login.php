@@ -50,7 +50,7 @@
                 <button type="submit" class="btn btn-primary btn-lg">Login</button>
             </div>
 
-            <p class="mt-3 text-center">Don't have an account? <a href="<?php echo site_url('auth/register'); ?>">Register here</a></p>
+            <p class="mt-3 text-center">Don't have an account? <a href="<?php echo site_url('AuthController/register_user'); ?>">Register here</a></p>
             
              <!-- Forgot Password Link -->
              <p class="mt-2 text-center"><a href="<?php echo site_url('yourController/forgot_password'); ?>">Forgot Password?</a></p>

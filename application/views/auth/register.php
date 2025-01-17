@@ -12,7 +12,7 @@
     <div class="container">
         <h2 class="text-center">Registration Form</h2>
         <p class="text-center">Please fill in the details below to register.</p>
-
+        <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
         <form method="POST" action="<?php echo site_url('AuthController/register_user'); ?>"> 
         <input type="hidden" name="role" value="<?php echo isset($role_id) ? $role_id : ''; ?>">  <!-- Hidden role field -->    
 
@@ -23,7 +23,7 @@
             </div>
 
              <!-- employee code -->
-             <div class="mb-3">
+            <div class="mb-3">
                 <label for="last_name" class="form-label">Last Name:</label>
                 <input type="text" class="form-control" id="last_name" name="last_name" required>
             </div>
@@ -77,7 +77,7 @@
                 <button type="submit" class="btn btn-primary btn-lg">Register</button>
             </div>
 
-            <p class="mt-3 text-center">Already have an account? <a href="<?php echo site_url('AuthController/login'); ?>">Login here</a></p>
+            <p class="mt-3 text-center">Already have an account? <a href="<?php echo site_url('AuthController/login_user'); ?>">Login here</a></p>
 
         </form>
     </div>
