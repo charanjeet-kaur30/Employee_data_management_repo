@@ -15,7 +15,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#">Manage Employees</a></li>
-                    <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AdminController/logout')?>">Logout</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AuthController/logout')?>">Logout</a></li>
                 </ul>
             </div>
         </div>

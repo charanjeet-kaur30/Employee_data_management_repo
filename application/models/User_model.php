@@ -7,6 +7,9 @@ class User_model extends CI_Model
    { 
      parent::__construct();
      $this->load->database();
+     $this->load->helper('url');
+     $this->load->helper('cookie');
+     $this->load->library('session');
    } 
    
       public function insert_user($data)
@@ -29,6 +32,7 @@ class User_model extends CI_Model
       //Check login credentials
     public function check_login($email, $password) 
     {
+       // echo "hello";
         $user = $this->get_user_by_email($email);
         if ($user && password_verify($password, $user['password'])) 
         {

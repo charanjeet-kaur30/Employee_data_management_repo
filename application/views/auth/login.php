@@ -13,17 +13,17 @@
         <h2 class="text-center">Login Form</h2>
         <p class="text-center">Please enter your credentials to login.</p>
 
-        <form method="POST" action="<?php echo site_url('AuthController/login_user'); ?>">
+        <form method="POST" action="<?php echo site_url('AuthController/login_user'); ?>" id="form">
             <!-- Email -->
             <div>
                 <label for="email" class="form-label">Email Address</label>
-                <input type="email" class="form-control" id="email" name="email"   required>
+                <input type="email" class="form-control" id="email" name="email" value="<?php echo get_cookie('email'); ?>"  required>
             </div>
 
             <!-- Password -->
             <div>
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password"  required>
+                <input type="password" class="form-control" id="password" name="password" value="<?php echo get_cookie('password')?>" required>
             </div>
 
              <!--  Role selection -->
@@ -53,10 +53,17 @@
             <p class="mt-3 text-center">Don't have an account? <a href="<?php echo site_url('AuthController/register_user'); ?>">Register here</a></p>
             
              <!-- Forgot Password Link -->
-             <p class="mt-2 text-center"><a href="<?php echo site_url('yourController/forgot_password'); ?>">Forgot Password?</a></p>
+             <p class="mt-2 text-center"><a href="<?php echo site_url('AuthController/forgot_password'); ?>">Forgot Password?</a></p>
         </form>
     </div>
-
+  <script>
+      document.addEventListener("DOMContentLoaded", function()
+         {
+            console.log('logged in');
+           document.querySelector("#form").reset(); // Clears all form fields
+         });
+  </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  
 </body>
 </html>

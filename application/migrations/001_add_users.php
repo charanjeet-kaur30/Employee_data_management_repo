@@ -29,10 +29,6 @@ class Migration_Add_users extends CI_Migration {
                                 'type' => 'VARCHAR',
                                 'constraint' => '255'
                         ),
-                        'confirm_password' => array(
-                                'type' => 'VARCHAR',
-                                'constraint' => '255'
-                        ),
                         'city' => array(
                                 'type' => 'VARCHAR',
                                 'constraint' => '50'
@@ -65,8 +61,6 @@ class Migration_Add_users extends CI_Migration {
                                 // 'default' => 'CURRENT_TIMESTAMP',
                                 // 'on_update' => 'CURRENT_TIMESTAMP'
                         ),
-
-
                 ));
                 $this->dbforge->add_key('id', TRUE);
                 $this->dbforge->create_table('users');
@@ -76,4 +70,6 @@ class Migration_Add_users extends CI_Migration {
         {
                 $this->dbforge->drop_table('users');
         }
+
+        
 }
