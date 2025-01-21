@@ -12,6 +12,7 @@ class AuthController extends CI_Controller
         $this->load->library('form_validation');
         $this->load->library('session');
         $this->load->helper('cookie');
+        $this->load->library('email');
 
     }
 
@@ -101,9 +102,9 @@ class AuthController extends CI_Controller
                 // exit;
                 if($remember_me)
                 {
-                     // Set cookies for one week...
-                  $this->input->set_cookie('email', $email, 604800);
-                  $this->input->set_cookie('password', $password, 604800);
+                     // Set cookies for 30 days...
+                  $this->input->set_cookie('email', $email, 86400 * 30);
+                  $this->input->set_cookie('password', $password, 86400 * 30);
                 }
 
                 if ($user['role_id'] == 1) 
@@ -127,107 +128,134 @@ class AuthController extends CI_Controller
       public function logout()
       {
         $this->session->sess_destroy();
-        delete_cookie('remember_me');
+        delete_cookie('email');
+        delete_cookie('password');
         redirect('AuthController/login_user');
       }
    //____________________________________________________________    
+      
+   private function send_email($recipient_email, $reset_link)
+   {
+       // Email configuration
+        $config = array(
+           'protocol' => 'smtp',
+           'smtp_host' => 'smtp.gmail.com',
+           'smtp_port' => 587,  // Use port 587 for STARTTLS
+           'smtp_user' => 'charanmaaserp@gmail.com', // Your Gmail address
+           'smtp_pass' =>'gslz kkim ovxt zsjk',  // Your Gmail password or App Password if 2FA is enabled
+           'mailtype' => 'html',
+           'charset' => 'utf-8',
+           'wordwrap' => TRUE,
+           'smtp_crypto' => 'tls',  // Use STARTTLS
+           'newline' => "\r\n", // Required for Gmail to properly send the email
+           'validation' => TRUE // To ensure the email is correctly formatted
+      
+    );
+
+    $this->email->initialize($config);  // Initialize the email settings
+
+       $this->email->from('charanmaaserp@gmail.com', 'Employee Data Management'); 
+       $this->email->to($recipient_email);
+       $this->email->subject('Password Reset Request');
+       $this->email->message("Click here to reset your password: <a href='$reset_link'>$reset_link</a>");
+   
+       return $this->email->send();
+   }
+   
+
       public function forgot_password()
       {
-        $this->load->view('auth/forgot_password');
-      }
-
-      public function process_forgot_password()
-      {
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-        if ($this->form_validation->run() === FALSE) 
-        {
-            // Load the forgot password page with errors
-            $this->load->view('auth/forgot-password');
+    
+        if ($this->form_validation->run() === FALSE)
+         {
+            $this->load->view('auth/forgot_password');
         } 
         else 
         {
-            // Process password reset request
             $email = $this->input->post('email');
-            
-            // Check if the email exists in the database
             $user = $this->db->get_where('users', ['email' => $email])->row();
-            
-            if ($user) {
-                // Generate a reset token
-                $token = bin2hex(random_bytes(50)); // Generate a secure random token
-                $expiry_time = date("Y-m-d H:i:s", strtotime('+1 hour')); // Token expiry (1 hour)
-                
-                // Update the user with the reset token and expiry time
+    
+            if ($user) 
+            {
+                $token = bin2hex(random_bytes(03));
+                $expiry_time = date("Y-m-d H:i:s", strtotime('+1 hour'));
                 $this->db->update('users', [
                     'reset_token' => $token,
                     'reset_token_expiry' => $expiry_time
                 ], ['email' => $email]);
-                
-                // Send email with reset link
-                $reset_link = site_url('auth/reset_password') . '?token=' . $token;
-                $subject = "Password Reset Request";
-                $message = "Click on the link to reset your password: " . $reset_link;
-                $this->email->from('no-reply@yourdomain.com', 'Your App Name');
-                $this->email->to($email);
-                $this->email->subject($subject);
-                $this->email->message($message);
-                
-                if ($this->email->send()) 
-                {
-                    $this->session->set_flashdata('success', 'Check your email for password reset instructions.');
-                    redirect('auth/forgot_password');
-                }
+    
+                $reset_link = site_url('auth/reset_password/' . urlencode($token));
+                echo $reset_link;
+                exit;
+
+                if (!$this->send_email($email, $reset_link))
+                 {
+                    echo $this->email->print_debugger();
+                    exit;
+                } 
                 else 
                 {
-                    $this->session->set_flashdata('error', 'Failed to send email.');
-                    redirect('auth/forgot_password');
+                    echo $this->session->set_flashdata('success', 'Check your email for password reset instructions.');
+                    redirect('auth/login');
                 }
-            } 
+            }
             else 
             {
-                $this->session->set_flashdata('error', 'Email not found.');
+                $this->session->set_flashdata('error', 'Email not found.');   
                 redirect('auth/forgot_password');
+
             }
         }
-    
-      }
-
-      public function reset_password() 
-      {
-        //  $this->load->view('auth/reset_password');
-         // reset-password.php
-
-    $token = $this->input->get('token');
-    
-    // Check if the token is valid and not expired
-    $user = $this->db->get_where('users', ['reset_token' => $token])->row();
-    
-    if ($user && new DateTime() < new DateTime($user->reset_token_expiry)) {
-        // Token is valid
-        if ($this->input->post('password')) {
-            // Password reset form submitted
-            $password = password_hash($this->input->post('password'), PASSWORD_BCRYPT); // Hash the password
-            $this->db->update('users', [
-                'password' => $password,
-                'reset_token' => NULL,
-                'reset_token_expiry' => NULL
-            ], ['reset_token' => $token]);
-            
-            $this->session->set_flashdata('success', 'Password successfully reset. You can now log in.');
-            redirect('auth/login');
-        }
-        
-        // Load the reset password form
-        $this->load->view('auth/reset_password', ['token' => $token]);
-    } else {
-        // Invalid or expired token
-        $this->session->set_flashdata('error', 'Invalid or expired token.');
-        redirect('auth/forgot_password');
     }
-
-     }
-        
+//__________________________________________________________________
       
-}    
-
+        public function reset_password($token = null)
+         {
+            if (!$token) 
+            {
+                echo "No token passed.";
+                show_error('Invalid access.');
+            }
+        
+            // Fetch user based on the token
+            $user = $this->db->get_where('users', ['reset_token' => $token])->row();
+            if (!$user)
+             {
+               echo "No user found for token.";
+               show_error('Invalid access.');
+             }
+        
+            // Check if token is invalid or expired
+            if (!$user || new DateTime() >= new DateTime($user->reset_token_expiry))
+            {
+                echo "Token expired.";
+                $this->session->set_flashdata('error', 'Invalid or expired token.');
+                redirect('auth/forgot_password');
+            }
+        
+            // If the user is found and token is valid, show the reset password form
+            if ($this->input->post('password')) {
+                $password = password_hash($this->input->post('password'), PASSWORD_BCRYPT);
+                
+                // Update password in the database
+                $this->db->update('users', [
+                    'password' => $password,
+                    'reset_token' => NULL,
+                    'reset_token_expiry' => NULL
+                ], ['reset_token' => $token]);
+        
+                if ($this->db->affected_rows() == 0) {
+                    echo "Failed to update reset token.";
+                    exit;
+                }
+        
+                $this->session->set_flashdata('success', 'Password successfully reset. You can now log in.');
+                redirect('auth/login_user');
+            }
+        
+            // Load the reset password page
+            $this->load->view('auth/reset_password', ['token' => $token]);
+        }
+     }
 ?>

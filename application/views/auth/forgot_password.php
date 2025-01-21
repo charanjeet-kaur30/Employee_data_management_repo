@@ -10,6 +10,7 @@
 <body>
 
     <div class="container">
+    <h2 class="text-center">Forgot Password</h2>
         <form method="POST" action="<?php echo site_url('AuthController/forgot_password'); ?>">
 
             <div>
@@ -20,7 +21,7 @@
 <div class="clear"></div>
 
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary btn-lg">Reset Password</button>
+                <button type="submit" class="btn btn-primary btn-lg">Continue</button>
             </div>
        </form>
     </div>
