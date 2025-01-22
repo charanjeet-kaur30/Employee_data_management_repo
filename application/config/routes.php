@@ -55,9 +55,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  $route['login'] = 'AuthController/login_user';
  $route['register'] = 'AuthController/register_user';
  $route['auth/forgot_password'] = 'AuthController/forgot_password';
- $route['auth/reset_password'] = 'AuthController/reset_password';
+ $route['reset_password/(:any)'] = 'AuthController/reset_password/$1';
 
 $route['employee/dashboard'] = 'EmployeeController/dashboard';
+$route['employee/add_logs'] = 'EmployeeController/add_logs';
+$route['employee/view_logs'] = 'EmployeeController/view_logs';
+$route['employee/edit_logs/(:num)'] = 'EmployeeController/edit_logs/$1';
 $route['admin/dashboard'] = 'AdminController/dashboard';
 $route['migrate'] = 'MigrationController';
  //echo date("Ymdhis");

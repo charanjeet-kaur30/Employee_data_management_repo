@@ -11,10 +11,11 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
-            <a class="navbar-brand" href="<?php echo base_url('EmployeeController/dashboard')?>">Employee Dashboard</a>
+            <a class="navbar-brand" href="<?php echo base_url('EmployeeController/dashboard')?>">
+            <img src="<?= base_url('assets/imgs/dashboard.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">  
+            Employee Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AuthController/logout')?>">Logout</a></li>
                 </ul>
             </div>
@@ -23,7 +24,14 @@
 
     <!-- Main Dashboard Content -->
     <div class="container mt-5">
-        <h1 class="mb-4">Welcome, Employee!</h1>
+    <h1 class="mb-4">Welcome, <?php if(isset($user['first_name']) && isset($user['last_name'])) 
+        {
+               echo $user['first_name'] . ' ' . $user['last_name'];
+        }
+        else
+        {
+            echo "Employee";
+        } ?>!</h1>
         <div class="row">
             <div class="col-md-4">
                 <div class="card bg-success text-white">
@@ -39,7 +47,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Your Logs</h5>
                         <p class="card-text">Add your daily logs.</p>
-                        <a href="#" class="btn btn-light">Add Logs</a>
+                        <a  href="<?php echo site_url('employee/add_logs'); ?>" class="btn btn-light">Add Logs</a>
                     </div>
                 </div>
             </div>

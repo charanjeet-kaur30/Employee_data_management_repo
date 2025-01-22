@@ -13,6 +13,7 @@ class AuthController extends CI_Controller
         $this->load->library('session');
         $this->load->helper('cookie');
         $this->load->library('email');
+        $this->load->helper('form');
 
     }
 
@@ -159,9 +160,26 @@ class AuthController extends CI_Controller
        $this->email->subject('Password Reset Request');
        $this->email->message("Click here to reset your password: <a href='$reset_link'>$reset_link</a>");
    
-       return $this->email->send();
+       if (!$this->email->send()) 
+       {
+        echo "Email failed: ";
+        echo $this->email->print_debugger(['headers', 'subject', 'body']);
+        exit;
+       } 
+       else 
+       {
+        echo "Email sent successfully.";
+       }
+
+       if (mail('charanmaaserp@gmail.com', 'Test Mail', 'This is a test.')) {
+        echo "Mail sent!";
+    } else {
+        echo "Mail failed.";
+    }
+    
    }
    
+
 
       public function forgot_password()
       {

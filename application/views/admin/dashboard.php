@@ -11,10 +11,13 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container">
-            <a class="navbar-brand" href="<?php echo base_url('AdminController/dashboard')?>">Admin Dashboard</a>
+
+            <a class="navbar-brand" href="<?php echo base_url('AdminController/dashboard')?>">
+            <img src="<?= base_url('assets/imgs/dashboard.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+            Admin Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="#">Manage Employees</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AuthController/logout')?>">Logout</a></li>
                 </ul>
             </div>
@@ -23,7 +26,15 @@
 
     <!-- Main Dashboard Content -->
     <div class="container mt-5">
-        <h1 class="mb-4">Welcome, Admin!</h1>
+        <h1 class="mb-4">Welcome, <?php if(isset($user['first_name']) && isset($user['last_name'])) 
+        {
+               echo $user['first_name'] . ' ' . $user['last_name'];
+        }
+        else
+        {
+            echo "Admin";
+        }
+        ?>!</h1>
         <div class="row">
             <div class="col-md-4">
                 <div class="card bg-primary text-white">

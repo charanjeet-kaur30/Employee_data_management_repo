@@ -41,6 +41,12 @@ class User_model extends CI_Model
         return false;
     }
 
+    public function get_user_by_id($id)
+    {
+      return $this->db->get_where('users', ['id' => $id])->row_array();
+    }
+
+
     // public function get_login($email, $role)
     // {
     //     $query = $this->db->get_where('users', ['email' => $email, 'role' => $role]);
