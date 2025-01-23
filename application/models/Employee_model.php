@@ -13,16 +13,23 @@ class Employee_model extends CI_Model
      $this->load->library('session');
    }
 
-   public function save_log($data)
+   public function save_log($log_data)
    {
-    return $this->db->insert('employee_logs', $data);
+    if ($this->db->insert('employee_logs', $log_data)) 
+    {
+        return true;
+    } 
+    else 
+    {
+        // Log the database error for debugging purposes
+        log_message('error', 'DB Error: ' . $this->db->error()['message']);
+        log_message('error', 'Last Query: ' . $this->db->last_query());
+        return false;
    }
-
-   public function get_log_by_id($log_id)
-   {
-    $query = $this->db->get_where('employee_logs', ['id' => $log_id]);
-    echo $log_id;
-    return $query->row_array(); // Return a single row as an associative array
-   }
+  }
+   public function get_logs_by_user_id($user_id)
+  {
+    return $this->db->get_where('employee_logs', ['user_id' => $user_id])->result_array();
+  }
 }
 ?>

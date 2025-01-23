@@ -38,12 +38,13 @@ class EmployeeController extends CI_Controller
 //___________________________________________________________
    public function add_logs()
    {
-     $this->form_validation->set_rules('log_description', 'Log Description', 'required');
+     $this->form_validation->set_rules('log_content', 'Log Description', 'required');
      $this->form_validation->set_rules('start_time', 'Start Time', 'required');
      $this->form_validation->set_rules('end_time', 'End Time', 'required');
 
      if ($this->form_validation->run() === FALSE) 
      {
+        $this->session->set_flashdata('error', validation_errors());
          $this->load->view('employee/add_logs');
      }
      else
@@ -64,55 +65,79 @@ class EmployeeController extends CI_Controller
          $interval = $start->diff($end);
          $hours = $interval->h; // Get hours from the interval
 
-         // If the log is 8 hours, save it to the database
-         if ($hours == 8) {
+         if (empty($start_time) || empty($end_time)) 
+         {
+            $this->session->set_flashdata('error', 'Start time or End time cannot be empty');
+            $this->load->view('employee/add_logs');
+            return;
+         }
+
+        // Add the current date to the time
+        $date = date('Y-m-d'); // Get the current date
+
+        // Append the date to the start and end time
+        $start_time = $date . ' ' . $start_time;
+        $end_time = $date . ' ' . $end_time;
+
+        // Convert the time to a valid datetime format
+        $start_time = date('Y-m-d H:i:s', strtotime($start_time));
+        $end_time = date('Y-m-d H:i:s', strtotime($end_time));
+
+       
              $log_data = [
                  'log_content' => $log_content,
                  'start_time' => $start_time,
                  'end_time' => $end_time,
-                 'employee_id' => $this->session->userdata('user_id') // Assuming employee ID is stored in session
+                 'user_id' => $this->session->userdata('user_id') // Assuming employee ID is stored in session
              ];
-             
-             // Save the log in the database
-             if ($this->Employee_model->save_log($log_data)) {
-                 // Redirect or show a success message
-                 $this->session->set_flashdata('success', 'Log added successfully!');
-                 redirect('employee/dashboard');
-             } else {
-                 $this->session->set_flashdata('error', 'Failed to add log!');
-                 redirect('employee/add_logs');
-             }
-         } else {
-             // If the time difference is not 8 hours, show an error
-             $this->session->set_flashdata('error', 'The log must be for 8 hours.');
-             redirect('employee/add_logs');
-         }
-     }
-   }
 
+             log_message('debug', 'Log Data: ' . print_r($log_data, true));
+             // Save the log in the database
+             if ($this->Employee_model->save_log($log_data)) 
+             {
+                 $this->session->set_flashdata('success', 'Log added successfully!');
+                 redirect('employee/view_logs'); // Redirect to "All Logs" page
+             } 
+             else 
+             {
+                 $this->session->set_flashdata('error', 'Failed to add log.');
+                 $this->load->view('employee/add_logs');
+             }
+         }
+            }
+        
 //___________________________________________________________
    public function view_logs()
    {
-    $this->load->view('employee/view_logs');
+     $user_id = $this->session->userdata('user_id'); // Assuming user_id is stored in the session
+
+      if (!$user_id) 
+      {
+        $this->session->set_flashdata('error', 'Please log in to view logs.');
+        redirect('AuthController/login_user');
+      }
+
+      // Fetch logs for the current user
+      $data['logs'] = $this->Employee_model->get_logs_by_user_id($user_id);
+ 
+      foreach ($data['logs'] as &$log)
+       {
+        // Format the start_time and end_time
+         // Extract the date from start_time or end_time (assuming they are the same)
+         $log['log_date'] = date('Y-m-d', strtotime($log['start_time']));
+         $log['start_time_only'] = date('H:i:s', strtotime($log['start_time'])); // Extract time
+         $log['end_time_only'] = date('H:i:s', strtotime($log['end_time'])); // Extract time
+       }
+
+      // Load the view with the logs
+      $this->load->view('employee/view_logs', $data);
    }
 
-//___________________________________________________________
-   public function edit_logs($log_id)
-   {
-    $log = $this->Employee_model->get_log_by_id($log_id); // Assuming this method fetches the log by its ID
-    echo "Edit Logs Method Reached for ID: $log_id"; // Debugging message
-
-    if ($log) 
+//______________________________________________________________________
+    public function view_profile()
     {
-        $data['log'] = $log; // Pass log data to the view
-        //$this->load->view('employee/edit_logs', $data); // Load the view with data
-        redirect('employee/edit_logs/' . $log_id);
-    } 
-    else
-    {
-        show_error('Log entry not found.');
+        $this->load->view('employee/profile');
     }
-   }
    
 }
 ?>

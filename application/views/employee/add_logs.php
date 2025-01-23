@@ -13,21 +13,21 @@
     
     <?php echo form_open('EmployeeController/add_logs'); ?>
         <div class="form-group">
-            <label for="log_description">Log Description</label>
-            <textarea name="log_description" class="form-control" id="log_description" rows="4"></textarea>
-            <?php echo form_error('log_description'); ?>
+            <label for="log_content">Log Description</label>
+            <textarea name="log_content" class="form-control" id="log_content" rows="4" required></textarea>
+            <div class="text-danger"><?php echo form_error('log_content'); ?></div>
         </div>
 
         <div class="form-group">
             <label for="start_time">Start Time</label>
             <input type="time" name="start_time" class="form-control" id="start_time" value="<?php echo set_value('start_time'); ?>" required>
-            <?php echo form_error('start_time'); ?>
+            <div class="text-danger"><?php echo form_error('start_time'); ?></div>        
         </div>
 
         <div class="form-group">
             <label for="end_time">End Time (8 hours shift)</label>
             <input type="time" name="end_time" class="form-control" id="end_time" value="<?php echo set_value('end_time'); ?>" required>
-            <?php echo form_error('end_time'); ?>
+            <div class="text-danger"><?php echo form_error('end_time'); ?></div>
         </div>
 
         <button type="submit" class="btn btn-primary">Save Log</button>

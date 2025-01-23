@@ -7,17 +7,19 @@
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
-<body class="dashboard">
+<body class="body">
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
         <div class="container">
 
             <a class="navbar-brand" href="<?php echo base_url('AdminController/dashboard')?>">
-            <img src="<?= base_url('assets/imgs/dashboard.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+            <img src="<?= base_url('assets/imgs/dashboards.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">
             Admin Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
+                <img src="<?= base_url('assets/imgs/user.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
                     <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
+                <img src="<?= base_url('assets/imgs/logout.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">    
                     <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AuthController/logout')?>">Logout</a></li>
                 </ul>
             </div>
@@ -39,8 +41,9 @@
             <div class="col-md-4">
                 <div class="card bg-primary text-white">
                     <div class="card-body">
+                    <img src="<?= base_url('assets/imgs/emp-mng.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
                         <h5 class="card-title">Employee Management</h5>
-                        <p class="card-text">Add, update, and remove employee records.</p>
+                        <p class="card-text">View and manage employee records.</p>
                         <a href="#" class="btn btn-light">Manage Employees</a>
                     </div>
                 </div>
@@ -49,6 +52,7 @@
             <div class="col-md-4">
                 <div class="card bg-dark text-white">
                     <div class="card-body">
+                    <img src="<?= base_url('assets/imgs/report.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
                         <h5 class="card-title">Reports</h5>
                         <p class="card-text">Generate and review system reports.</p>
                         <a href="#" class="btn btn-light">View Reports</a>

@@ -169,3 +169,10 @@ footer {
     background-color: rgb(67, 124, 132);
 }
 
+.back{
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+}
+

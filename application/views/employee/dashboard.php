@@ -12,10 +12,11 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <div class="container">
             <a class="navbar-brand" href="<?php echo base_url('EmployeeController/dashboard')?>">
-            <img src="<?= base_url('assets/imgs/dashboard.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">  
+            <img src="<?= base_url('assets/imgs/dashboards.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">  
             Employee Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
+                <img src="<?= base_url('assets/imgs/logout.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">   
                     <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AuthController/logout')?>">Logout</a></li>
                 </ul>
             </div>
@@ -36,18 +37,20 @@
             <div class="col-md-4">
                 <div class="card bg-success text-white">
                     <div class="card-body">
+                        <img src="<?= base_url('assets/imgs/user.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
                         <h5 class="card-title">Your Profile</h5>
                         <p class="card-text">View and update your personal information.</p>
-                        <a href="#" class="btn btn-light">Manage Profile</a>
+                        <a href="<?php echo site_url('employee/profile'); ?>" class="btn btn-light">Manage Profile</a>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card bg-info text-white">
                     <div class="card-body">
+                    <img src="<?= base_url('assets/imgs/log-data.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
                         <h5 class="card-title">Your Logs</h5>
-                        <p class="card-text">Add your daily logs.</p>
-                        <a  href="<?php echo site_url('employee/add_logs'); ?>" class="btn btn-light">Add Logs</a>
+                        <p class="card-text">View and Manage your daily logs.</p>
+                        <a  href="<?php echo site_url('employee/view_logs'); ?>" class="btn btn-light">All Logs</a>
                     </div>
                 </div>
             </div>

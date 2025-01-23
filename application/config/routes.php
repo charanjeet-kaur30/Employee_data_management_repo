@@ -60,8 +60,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['employee/dashboard'] = 'EmployeeController/dashboard';
 $route['employee/add_logs'] = 'EmployeeController/add_logs';
 $route['employee/view_logs'] = 'EmployeeController/view_logs';
-$route['employee/edit_logs/(:num)'] = 'EmployeeController/edit_logs/$1';
 $route['admin/dashboard'] = 'AdminController/dashboard';
+$route['employee/profile'] = 'EmployeeController/profile';
+
 $route['migrate'] = 'MigrationController';
  //echo date("Ymdhis");
 
