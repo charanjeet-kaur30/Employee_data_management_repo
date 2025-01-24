@@ -27,9 +27,22 @@ class Employee_model extends CI_Model
         return false;
    }
   }
+
    public function get_logs_by_user_id($user_id)
   {
     return $this->db->get_where('employee_logs', ['user_id' => $user_id])->result_array();
   }
+
+   public function get_employee_by_id($user_id)
+   {
+     $query = $this->db->get_where('users', array('id'=>$user_id));
+     return $query->row_array();
+   }
+
+   public function update_employee($user_id, $data)
+   {
+     $this->db->where('id', $user_id);
+     return $this->db->update('users', $data);
+   }
 }
 ?>

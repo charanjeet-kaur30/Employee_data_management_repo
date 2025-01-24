@@ -62,6 +62,10 @@ $route['employee/add_logs'] = 'EmployeeController/add_logs';
 $route['employee/view_logs'] = 'EmployeeController/view_logs';
 $route['admin/dashboard'] = 'AdminController/dashboard';
 $route['employee/profile'] = 'EmployeeController/profile';
+$route['employee/edit_profile'] = 'EmployeeController/edit_profile';
+$route['admin/profile'] = 'AdminController/profile';
+$route['admin/edit_profile'] = 'AdminController/edit_profile';
+$route['admin/employee_management'] = 'AdminController/manage_employees';
 
 $route['migrate'] = 'MigrationController';
  //echo date("Ymdhis");

@@ -13,13 +13,13 @@
         <div class="container">
 
             <a class="navbar-brand" href="<?php echo base_url('AdminController/dashboard')?>">
-            <img src="<?= base_url('assets/imgs/dashboards.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">
+            <img src="<?php echo base_url('assets/imgs/dashboards.png'); ?>" alt="Logo" width="30" height="30" class="d-inline-block align-top">
             Admin Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
                 <img src="<?= base_url('assets/imgs/user.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
-                    <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
-                <img src="<?= base_url('assets/imgs/logout.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">    
+                    <li class="nav-item"><a class="nav-link" href="<?php echo site_url('admin/profile')?>">Profile</a></li>
+                <img src="<?php echo base_url('assets/imgs/logout.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">    
                     <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AuthController/logout')?>">Logout</a></li>
                 </ul>
             </div>
@@ -41,10 +41,10 @@
             <div class="col-md-4">
                 <div class="card bg-primary text-white">
                     <div class="card-body">
-                    <img src="<?= base_url('assets/imgs/emp-mng.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
+                    <img src="<?php echo base_url('assets/imgs/profile.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
                         <h5 class="card-title">Employee Management</h5>
                         <p class="card-text">View and manage employee records.</p>
-                        <a href="#" class="btn btn-light">Manage Employees</a>
+                        <a href="<?php echo site_url('admin/employee_management')?>" class="btn btn-light">Manage Employees</a>
                     </div>
                 </div>
             </div>

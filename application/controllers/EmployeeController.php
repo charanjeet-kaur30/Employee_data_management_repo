@@ -134,10 +134,54 @@ class EmployeeController extends CI_Controller
    }
 
 //______________________________________________________________________
-    public function view_profile()
+// FOR EMPLOYEE PROFILE 
+    public function profile()
     {
-        $this->load->view('employee/profile');
+      $user_id = $this->session->userdata('user_id'); //  user ID from session..
+      $data['user'] = $this->Employee_model->get_employee_by_id($user_id); //user's data  Retrieved ..
+  
+      if (!$data['user'])
+      {
+        $this->session->set_flashdata('error', 'Profile not found!');
+        redirect('employee/dashboard'); // Redirect if user not found
+      }
+  
+        $this->load->view('employee/profile', $data);
     }
-   
+
+    public function edit_profile()
+    {
+      $user_id = $this->session->userdata('user_id'); 
+      $data['user'] = $this->Employee_model->get_employee_by_id($user_id);
+  
+      if (!$data['user']) 
+      {
+          $this->session->set_flashdata('error', 'Profile not found!');
+          redirect('employee/dashboard');
+      }
+  
+      $this->load->view('employee/edit_profile', $data);
+      
+    }
+
+   public function update_profile()
+   {
+    $user_id = $this->session->userdata('user_id');
+    $data = $this->input->post(); // Get all form data
+
+    if ($this->Employee_model->update_employee($user_id, $data)) 
+    {
+       $this->session->set_flashdata('success', 'Profile updated successfully!');
+    }
+    else
+    {
+       $this->session->set_flashdata('error', 'Failed to update profile.');
+    }
+
+    redirect('employee/profile');
+   }
+
+
+
 }
 ?>

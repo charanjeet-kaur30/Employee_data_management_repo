@@ -10,7 +10,7 @@
 <body class="profile">
         <div class="container">
         <div class="d-flex justify-content-end">
-        <a href="<?php echo base_url('employee/dashboard'); ?>" class="btn btn-secondary">Back to Dashboard</a>
+        <a href="<?php echo base_url('admin/dashboard'); ?>" class="btn btn-secondary">Back to Dashboard</a>
     </div>
     <img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">  
         <h1 img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top" class="profile" >Your Profile</h1>
@@ -63,9 +63,8 @@
     </div>
 </div>
 
-<!-- Navigation Buttons -->
 <div class="mt-4">
-    <a href="<?php echo site_url('employee/edit_profile'); ?>" class="btn btn-primary">Edit Profile</a>
+    <a href="<?php echo site_url('admin/edit_profile'); ?>" class="btn btn-primary">Edit Profile</a>
 </div>
 </div>
 
