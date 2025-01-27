@@ -52,10 +52,10 @@
             <div class="col-md-4">
                 <div class="card bg-dark text-white">
                     <div class="card-body">
-                    <img src="<?= base_url('assets/imgs/report.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
+                    <img src="<?php echo base_url('assets/imgs/report.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
                         <h5 class="card-title">Reports</h5>
                         <p class="card-text">Generate and review system reports.</p>
-                        <a href="#" class="btn btn-light">View Reports</a>
+                        <a href="<?php echo site_url('admin/reports')?>" class="btn btn-light">View Reports</a>
                     </div>
                 </div>
             </div>

@@ -44,7 +44,7 @@ class EmployeeController extends CI_Controller
 
      if ($this->form_validation->run() === FALSE) 
      {
-        $this->session->set_flashdata('error', validation_errors());
+         $this->session->set_flashdata('error', validation_errors());
          $this->load->view('employee/add_logs');
      }
      else

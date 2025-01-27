@@ -32,5 +32,17 @@ class Admin_model extends CI_Model
     $query = $this->db->get(); 
     return $query->result(); 
    }
+
+   public function get_all_reports()
+   {
+     $query= $this->db->get('reports');
+     return $query->result_array();
+   }
+
+   public function get_report_by_id($id)
+   {
+     $query= $this->db->get_where('reports', ['id' => $id]);
+     return $query->row_array();
+   }
 }
 ?>
