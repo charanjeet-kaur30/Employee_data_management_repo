@@ -33,7 +33,7 @@ class Migration_Add_employee_logs extends CI_Migration {
                         'created_at' => array(
                                 'type' => 'TIMESTAMP',
                                 'null' => TRUE,
-                                 'default' => 'CURRENT_TIMESTAMP'
+                                //  'default' => 'CURRENT_TIMESTAMP'
                         ),
                 ));
                 $this->dbforge->add_key('id', TRUE);

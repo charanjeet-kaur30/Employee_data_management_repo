@@ -25,16 +25,7 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" value="<?php echo get_cookie('password')?>" required>
             </div>
-
-             <!--  Role selection -->
-             <div class="mb-3">
-                <label for="role_id" class="form-label">Role:</label>
-                <select class="form-control" id="role_id" name="role_id" required>
-                    <option>Select-Role</option>
-                    <option value="1" <?php echo (isset($role_id) && $role_id == 1) ? 'selected' : ''; ?>>Admin</option>
-                    <option value="2" <?php echo (isset($role_id) && $role_id == 2) ? 'selected' : ''; ?>>Employee</option>
-                </select>
-            </div>
+            
             <div class="clear"></div>
 
             <!-- Remember Me Checkbox -->

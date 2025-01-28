@@ -1,8 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-if (!file_exists(FCPATH . 'vendor/autoload.php')) {
-  die('autoload.php not found in vendor folder');
-}
+
 
 class AdminController extends CI_Controller
 {
