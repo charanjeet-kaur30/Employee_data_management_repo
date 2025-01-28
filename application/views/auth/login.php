@@ -10,10 +10,19 @@
 <body class="login">
 
     <div class="container">
+    <?php if (!isset($role)): ?>
+    <!-- Use $role variable safely -->   
+     <p class="bg-success"><i>Logged in as: 
+        <?= htmlspecialchars($this->session->userdata('role_id') == 1 ? 'Admin' : 'Employee'); ?></i>
+    </p>
+    <?php else: ?>
+          <p>Role not specified.</p>
+    <?php endif; ?>
+
         <h2 class="text-center">Login Form</h2>
         <p class="text-center">Please enter your credentials to login.</p>
 
-        <form method="POST" action="<?php echo site_url('AuthController/login_user'); ?>" id="form">
+        <form method="POST" id="login_form" onclick="return validateLoginForm()" action="<?php echo site_url('AuthController/login_user/'.$role_id); ?>" id="form">
             <!-- Email -->
             <div>
                 <label for="email" class="form-label">Email Address</label>
@@ -26,17 +35,6 @@
                 <input type="password" class="form-control" id="password" name="password" value="<?php echo get_cookie('password')?>" required>
             </div>
 
-             <!--  Role selection -->
-             <div class="mb-3">
-                <label for="role_id" class="form-label">Role:</label>
-                <select class="form-control" id="role_id" name="role_id" required>
-                    <option>Select-Role</option>
-                    <option value="1" <?php echo (isset($role_id) && $role_id == 1) ? 'selected' : ''; ?>>Admin</option>
-                    <option value="2" <?php echo (isset($role_id) && $role_id == 2) ? 'selected' : ''; ?>>Employee</option>
-                </select>
-            </div>
-            <div class="clear"></div>
-
             <!-- Remember Me Checkbox -->
             <div>
                 <input type="checkbox" class="form-check-input" id="rememberMe" name="remember_me">
@@ -44,6 +42,9 @@
             </div>
 
 <div class="clear"></div>
+
+                <!-- Hidden Role Input Field -->
+            <input type="hidden" name="role" value="<?php echo $role_id; ?>">
 
             <!-- Submit Button -->
             <div class="d-grid gap-2">
@@ -64,6 +65,6 @@
          });
   </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  
+    <script src="<?php echo base_url('assets/js/form_validations.js')?>"></script>
 </body>
 </html>

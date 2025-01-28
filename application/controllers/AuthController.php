@@ -16,8 +16,8 @@ class AuthController extends CI_Controller
         $this->load->helper('form');
 
     }
-
-    public function register_user()
+ 
+    public function register_user($role_id = 2)   // Default to 2 (Employee) if no role is passed
     {
         $this->form_validation->set_rules('first_name', 'First Name', 'required|alpha');
         $this->form_validation->set_rules('last_name', 'Last Name', 'required|alpha');
@@ -30,7 +30,7 @@ class AuthController extends CI_Controller
       if ($this->form_validation->run() == FALSE) 
       {
         // Reload the registration view with error messages
-        $this->load->view('auth/register');
+        $this->load->view('auth/register',['role_id' => $role_id]);
       } 
       else 
       {
@@ -42,10 +42,9 @@ class AuthController extends CI_Controller
         $mobile_no= $this->input->post('mobile_no');
         $dob= $this->input->post('dob');
         $confirm_password = $this->input->post('confirm_password');
-        // $status= $this->input->post('status');
-        $role_id = $this->input->post('role_id');
-     
-        // echo "hello";
+         // Use the passed or default role_id
+         $role_id = $this->input->post('role_id') ?: $role_id;  // If no role_id is passed, use the default
+
         $data['role_id'] = '';  // Default value or set as needed
         
         // Capture form data
@@ -57,35 +56,40 @@ class AuthController extends CI_Controller
         'city'=>  $city,
         'mobile_no'=> $mobile_no,
         'dob'=>  $dob,
-        // 'status'=> $status,
-        'role_id' => $role_id,
+        'role_id' => $role_id, 
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s')
         ];
  
-        // echo "<pre>";
-        // print_r($data); // To check form data
-        // echo "</pre>";
-        // exit;
-  
         //Insert user into the database
         if ($this->User_model->insert_user($data)) 
         {
             echo "hello hii";
             $this->session->set_flashdata('message', 'Registration successful. Please login.');
-            redirect('AuthController/login_user');
+            redirect('AuthController/login_user'. $role_id);
         } 
         else 
         {
             $this->session->set_flashdata('error', 'Registration failed. Please try again.');
-            redirect('AuthController/register_user');
+            redirect('AuthController/register_user'. $role_id);
         }
     } 
 
     }
 //______________________________________________________________________
-    public function login_user()
+    public function login_user($role_id = null)
     {
+        // If a role_id is passed via the URL, store it in the session, or fall back to the session
+    if ($role_id !== null) 
+    {
+        $this->session->set_userdata('role_id', $role_id);
+    } 
+    else 
+    {
+        // If no role_id is passed, check if it's available in session
+        $role_id = $this->session->userdata('role_id');
+    }
+
         if ($this->input->server('REQUEST_METHOD') == 'POST')
         {
             $email = $this->input->post('email');
@@ -97,10 +101,7 @@ class AuthController extends CI_Controller
             if ($user && password_verify($password, $user['password'])) 
             {
                 $this->session->set_userdata(['user_id' => $user['id'], 'role_id' => $user['role_id']]);   // Set session data
-                // echo "<pre>";
-                // print_r($this->session->userdata());
-                // echo "</pre>";
-                // exit;
+            
                 if($remember_me)
                 {
                      // Set cookies for 30 days...
@@ -112,18 +113,21 @@ class AuthController extends CI_Controller
                 {
                     redirect('admin/dashboard');
                 } 
-                else 
+                elseif($user['role_id'] == 2) 
                 {
                     redirect('employee/dashboard');
                 }
+                else 
+                {
+                    // Default redirect
+                    redirect('login');
+                }
             } 
-            else 
-            {
-                $this->session->set_flashdata('error', 'Invalid email or password.');
-                redirect('login');
-            }
+            $this->session->set_flashdata('error', 'Invalid email or password.');
+            redirect('AuthController/login_user/'.$role_id);  // Include role_id in the redirect
         }
-        $this->load->view('auth/login');
+        $role_id = $this->session->userdata('role_id');  // Get role_id from session
+        $this->load->view('auth/login', ['role_id' => $role_id]);
     }
 
       public function logout()

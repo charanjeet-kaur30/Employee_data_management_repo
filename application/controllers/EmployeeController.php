@@ -107,31 +107,68 @@ class EmployeeController extends CI_Controller
             }
         
 //___________________________________________________________
-   public function view_logs()
-   {
-     $user_id = $this->session->userdata('user_id'); // Assuming user_id is stored in the session
+public function view_logs() 
+{
+    $user_id = $this->session->userdata('user_id'); // Get the current logged-in user's ID
 
-      if (!$user_id) 
-      {
+    if (!$user_id) 
+    {
         $this->session->set_flashdata('error', 'Please log in to view logs.');
         redirect('AuthController/login_user');
-      }
+    }
 
-      // Fetch logs for the current user
-      $data['logs'] = $this->Employee_model->get_logs_by_user_id($user_id);
- 
-      foreach ($data['logs'] as &$log)
-       {
-        // Format the start_time and end_time
-         // Extract the date from start_time or end_time (assuming they are the same)
-         $log['log_date'] = date('Y-m-d', strtotime($log['start_time']));
-         $log['start_time_only'] = date('H:i:s', strtotime($log['start_time'])); // Extract time
-         $log['end_time_only'] = date('H:i:s', strtotime($log['end_time'])); // Extract time
-       }
+    // Load pagination library
+    $this->load->library('pagination');
 
-      // Load the view with the logs
-      $this->load->view('employee/view_logs', $data);
-   }
+    $per_page = 5; // Number of logs per page
+    $total_rows = $this->Employee_model->count_user_logs($user_id); // Count total logs for the user
+
+    // Pagination configuration
+    $config['base_url'] = site_url('EmployeeController/view_logs'); // Base URL for pagination links
+    $config['total_rows'] = $total_rows; // Total log entries
+    $config['per_page'] = $per_page; // Logs per page
+    $config['uri_segment'] = 3; // The segment in the URL where the page number appears
+
+    // Bootstrap-styled pagination
+    $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">';
+    $config['full_tag_close'] = '</ul></nav>';
+    $config['first_tag_open'] = '<li class="page-item">';
+    $config['first_tag_close'] = '</li>';
+    $config['last_tag_open'] = '<li class="page-item">';
+    $config['last_tag_close'] = '</li>';
+    $config['next_tag_open'] = '<li class="page-item">';
+    $config['next_tag_close'] = '</li>';
+    $config['prev_tag_open'] = '<li class="page-item">';
+    $config['prev_tag_close'] = '</li>';
+    $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link">';
+    $config['cur_tag_close'] = '</a></li>';
+    $config['num_tag_open'] = '<li class="page-item">';
+    $config['num_tag_close'] = '</li>';
+    $config['attributes'] = ['class' => 'page-link'];
+
+    // Initialize pagination
+    $this->pagination->initialize($config);
+
+    // Get the current page
+    $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+    // Fetch logs for the current user with pagination
+    $data['logs'] = $this->Employee_model->get_user_logs_paginated($user_id, $per_page, $page);
+
+    // Generate pagination links
+    $data['pagination'] = $this->pagination->create_links();
+
+    // Format logs
+    foreach ($data['logs'] as &$log) 
+    {
+        $log['log_date'] = date('Y-m-d', strtotime($log['start_time']));
+        $log['start_time_only'] = date('H:i:s', strtotime($log['start_time']));
+        $log['end_time_only'] = date('H:i:s', strtotime($log['end_time']));
+    }
+
+    // Load the view with the logs and pagination
+    $this->load->view('employee/view_logs', $data);
+}
 
 //______________________________________________________________________
 // FOR EMPLOYEE PROFILE 

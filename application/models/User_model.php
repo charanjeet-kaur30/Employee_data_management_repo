@@ -45,23 +45,6 @@ class User_model extends CI_Model
     {
       return $this->db->get_where('users', ['id' => $id])->row_array();
     }
-
-
-    // public function get_login($email, $role)
-    // {
-    //     $query = $this->db->get_where('users', ['email' => $email, 'role' => $role]);
-    //     return $query->row_array();  // Return user data if found
-    // }
-
-    //  Fetch all employees (for admin)
-    //  public function get_all_employees()
-    // {
-    //     $this->db->select('*');
-    //     $this->db->from('users');
-    //     $this->db->where('role_id', 2);  // Assuming 2 is for employees
-    //     return $this->db->get()->result_array();
-    // }
-
 }
 
 ?>
