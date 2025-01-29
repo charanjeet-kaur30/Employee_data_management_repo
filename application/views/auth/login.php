@@ -6,10 +6,25 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css');?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+       .error {
+        color: red;
+        font-size: 0.875em;
+        display: block;
+        margin-top: 5px;
+            }
+    </style>
 </head>
 <body class="login">
 
     <div class="container">
+
+    <div class="d-flex justify-content-end">
+        <a href="<?php echo base_url('HomeController/index'); ?>" class="btn btn-secondary">Back to Home</a>
+    </div>
+
+    <div class="clear"></div>
+
     <?php if (!isset($role)): ?>
     <!-- Use $role variable safely -->   
      <p class="bg-success"><i>Logged in as: 
