@@ -6,19 +6,28 @@
     <title>Registration</title>
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('assets/css/style.css');?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <style>
-      input:invalid {
-                     border: 2px solid red;
-                    }
-      input:valid {
-                    border: 2px solid green;
-                  }
+       .error {
+        color: red;
+        font-size: 12px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        display: block;
+        margin-top: 5px;
+            }
     </style>
 
 </head>
 <body class="register">
 
     <div class="container">
+
+    <div class="d-flex justify-content-end">
+        <a href="<?php echo base_url('HomeController/index'); ?>" class="btn btn-secondary">Back to Home</a>
+    </div>
+
         <h2 class="text-center">Registration Form</h2>
         <p class="text-center">Please fill in the details below to register.</p>
         <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
@@ -31,13 +40,11 @@
                 <input type="text" class="form-control" id="first_name" name="first_name" required>
             </div>
 
-             <!-- employee code -->
             <div class="mb-3">
                 <label for="last_name" class="form-label">Last Name:</label>
                 <input type="text" class="form-control" id="last_name" name="last_name" required>
             </div>
 
-            <!-- Email -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email:</label>
                 <input type="email" class="form-control" id="email" name="email" required>
@@ -51,14 +58,13 @@
             <div class="mb-3">
                 <label for="mobile_no" class="form-label">Mobile No.:</label>
                 <input type="text" class="form-control" id="mobile_no" name="mobile_no" required>
-            </div>
+             </div>
 
             <div class="mb-3">
                 <label for="dob" class="form-label">D.O.B:</label>
-                <input type="date" class="form-control" id="dob" name="dob" required>
+                <input type="date" class="form-control" id="dob" name="dob"  required>
             </div>
-
-            <!-- Password -->
+      
             <div class="mb-3">
                 <label for="password" class="form-label">Password:</label>
                 <input type="password" class="form-control" id="password" name="password" required>
@@ -85,6 +91,7 @@
         </form>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
     <script src="<?php echo base_url('assets/js/form_validations.js');?>"></script>
 </body>
 </html>

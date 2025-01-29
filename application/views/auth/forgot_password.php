@@ -10,6 +10,12 @@
 <body>
 
     <div class="container">
+       
+    <div class="d-flex justify-content-end">
+        <a href="<?php echo base_url('AuthController/login_user'); ?>" class="btn btn-secondary">Back to Login</a>
+    </div>
+
+
     <h2 class="text-center">Forgot Password</h2>
         <form method="POST" action="<?php echo site_url('AuthController/forgot_password'); ?>">
 
@@ -21,7 +27,7 @@
 <div class="clear"></div>
 
             <div class="d-grid gap-2">
-                <button type="submit" class="btn btn-primary btn-lg">Continue</button>
+                <button type="submit" class="btn btn-primary btn-lg">Send OTP</button>
             </div>
        </form>
     </div>

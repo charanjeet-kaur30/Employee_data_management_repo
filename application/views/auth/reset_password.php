@@ -10,6 +10,11 @@
 <body class="reset-password">
 
     <div class="container">
+
+    <div class="d-flex justify-content-end">
+        <a href="<?php echo base_url('AuthController/forgot_password'); ?>" class="btn btn-secondary">Back to Login</a>
+    </div>
+
         <h2 class="text-center">Reset Password</h2>
         <p class="text-center">Enter your new password.</p>
 
