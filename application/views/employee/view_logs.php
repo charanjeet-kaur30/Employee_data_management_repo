@@ -64,6 +64,20 @@
         <?php endif; ?>
         </tbody>
     </table>
+
+    <!-- Pagination links -->
+    <div class="pagination-wrapper">
+    <?php 
+    // Check if $pagination is set before echoing
+    if (isset($pagination)) 
+    {
+        echo $pagination;
+    } 
+    else 
+    {
+        echo 'No pagination available';
+    }
+    ?>
 </div>
 
 

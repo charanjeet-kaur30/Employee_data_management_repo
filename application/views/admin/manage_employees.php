@@ -37,21 +37,21 @@
     </thead>
     <tbody>
       <?php if (!empty($employees)): ?>
-        <?php foreach ($employees as $employee): ?>
+        <?php foreach ($employees as $index => $employee): ?>
         <tr>
-            <td><?php echo $employee->id ?></td>
-            <td><?php echo $employee->first_name ?></td>
-            <td><?php echo $employee->last_name ?></td>
-            <td><?php echo $employee->email ?></td>
-            <td><?php echo $employee->city ?></td>
-            <td><?php echo $employee->mobile_no ?></td>
+            <td><?php echo $index + 1 ?></td>
+            <td><?php echo $employee['first_name']; ?></td>
+            <td><?php echo $employee['last_name']; ?></td>
+            <td><?php echo $employee['email']; ?></td>
+            <td><?php echo $employee['city']; ?></td>
+            <td><?php echo $employee['mobile_no']; ?></td>
             <td>
-                <select class="form-control" id="status_<?php echo $user->id ?>" onchange="updateStatus(<?= $employee->id ?>)">
-                    <option value="active" <?= ($employee->status == 'active') ? 'selected' : '' ?>>Active</option>
-                    <option value="inactive" <?= ($employee->status == 'inactive') ? 'selected' : '' ?>>Inactive</option>
+                <select class="form-control" id="status_<?php echo $employee['id'];?>" onchange="updateStatus(<?php echo $employee['id']; ?>)">
+                    <option value="active" <?php echo ($employee['status'] == 'active') ? 'selected' : '' ?>>Active</option>
+                    <option value="inactive" <?php echo ($employee['status'] == 'inactive') ? 'selected' : '' ?>>Inactive</option>
                 </select>
             </td>
-            <td><button class="btn btn-primary" onclick="updateStatus(<?= $employee->id ?>)">Update Status</button></td>
+            <td><button class="btn btn-primary" onclick="updateStatus(<?php echo $employee['id']; ?>)">Update Status</button></td>
         </tr>
         <?php endforeach; ?>
         <?php else: ?>
@@ -61,6 +61,19 @@
         <?php endif; ?>
     </tbody>
 </table>
+
+    <!-- Pagination links -->
+    <div class="pagination-wrapper">
+    <?php 
+    // Check if $pagination is set before echoing
+    if (isset($pagination)) {
+        echo $pagination;
+    } else {
+        echo 'No pagination available';
+    }
+?>
+    </div>
+
 </div>
 
 <script>

@@ -25,12 +25,20 @@ class Admin_model extends CI_Model
      return $this->db->update('users', $data);
    }
 
-   public function get_all_employees()
+   public function count_employees()
    {
-    $this->db->select('id, first_name, last_name, email, city, mobile_no, status');
-    $this->db->from('users'); 
-    $query = $this->db->get(); 
-    return $query->result(); 
+       // Count total employees with role_id = 2
+       $this->db->where('role_id', 2);
+       return $this->db->count_all_results('users'); // Return total count
+   }
+   
+   public function get_all_employees($limit, $start)
+   {
+    $this->db->where('role_id', 2); // Fetch only employees (role_id = 2)
+    $this->db->limit($limit, $start); // Apply limit and offset
+    $this->db->order_by('created_at', 'DESC');
+    $query = $this->db->get('users'); // Assuming 'users' is your table
+    return $query->result_array(); // Return the result as an array
    }
 
    public function get_all_reports()

@@ -10,10 +10,19 @@
 <body class="login">
 
     <div class="container">
+    <?php if (!isset($role)): ?>
+    <!-- Use $role variable safely -->   
+     <p class="bg-success"><i>Logged in as: 
+        <?= htmlspecialchars($this->session->userdata('role_id') == 1 ? 'Admin' : 'Employee'); ?></i>
+    </p>
+    <?php else: ?>
+          <p>Role not specified.</p>
+    <?php endif; ?>
+
         <h2 class="text-center">Login Form</h2>
         <p class="text-center">Please enter your credentials to login.</p>
 
-        <form method="POST" action="<?php echo site_url('AuthController/login_user'); ?>" id="form">
+        <form method="POST" id="login_form" onclick="return validateLoginForm()" action="<?php echo site_url('AuthController/login_user/'.$role_id); ?>" id="form">
             <!-- Email -->
             <div>
                 <label for="email" class="form-label">Email Address</label>
@@ -25,8 +34,11 @@
                 <label for="password" class="form-label">Password</label>
                 <input type="password" class="form-control" id="password" name="password" value="<?php echo get_cookie('password')?>" required>
             </div>
+<<<<<<< HEAD
             
             <div class="clear"></div>
+=======
+>>>>>>> 9968d61c42698dbee426e1bea50aa70b3b596bd7
 
             <!-- Remember Me Checkbox -->
             <div>
@@ -35,6 +47,9 @@
             </div>
 
 <div class="clear"></div>
+
+                <!-- Hidden Role Input Field -->
+            <input type="hidden" name="role" value="<?php echo $role_id; ?>">
 
             <!-- Submit Button -->
             <div class="d-grid gap-2">
@@ -55,6 +70,6 @@
          });
   </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  
+    <script src="<?php echo base_url('assets/js/form_validations.js')?>"></script>
 </body>
 </html>

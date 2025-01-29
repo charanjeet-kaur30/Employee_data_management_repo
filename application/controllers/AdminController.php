@@ -1,6 +1,9 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9968d61c42698dbee426e1bea50aa70b3b596bd7
 
 class AdminController extends CI_Controller
 {
@@ -13,6 +16,7 @@ class AdminController extends CI_Controller
      $this->load->model('User_model');
      $this->load->model('Admin_model');
      $this->load->library('session');
+     $this->load->library('pagination');
    }
 
    public function dashboard()
@@ -82,12 +86,62 @@ public function profile()
     redirect('admin/profile');
    }
 
-   public function manage_employees()
-   {
-    $data['employees'] = $this->Admin_model->get_all_employees();
-    $this->load->view('admin/manage_employees', $data);
-   }  
+   public function test_employee_count() {
+    $this->load->model('Admin_model');
+    $count = $this->Admin_model->count_employees();
+    echo "Total employees: " . $count;
+}
+   
+public function manage_employees() 
+{
+  $this->load->model('Admin_model');
+  $this->load->library('pagination'); // Load pagination library
 
+  $per_page = 6; // Number of employees per page
+  $total_rows = $this->Admin_model->count_employees(); // Get total employee count
+
+  // Pagination configuration
+  $config['base_url'] = site_url('AdminController/manage_employees'); // Base URL
+  $config['total_rows'] = $total_rows; // Total employees
+  $config['per_page'] = $per_page; // Employees per page
+  $config['uri_segment'] = 3; // The segment where the page number appears in the URL
+  $config['num_links'] = 3; // Number of links to show around the current page
+
+  $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">'; // Open wrapper
+$config['full_tag_close'] = '</ul></nav>'; // Close wrapper
+
+$config['first_tag_open'] = '<li class="page-item">';
+$config['first_tag_close'] = '</li>';
+$config['last_tag_open'] = '<li class="page-item">';
+$config['last_tag_close'] = '</li>';
+
+$config['next_tag_open'] = '<li class="page-item">';
+$config['next_tag_close'] = '</li>';
+$config['prev_tag_open'] = '<li class="page-item">';
+$config['prev_tag_close'] = '</li>';
+
+$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link">';
+$config['cur_tag_close'] = '</a></li>';
+
+$config['num_tag_open'] = '<li class="page-item">';
+$config['num_tag_close'] = '</li>';
+
+$config['attributes'] = ['class' => 'page-link']; // Add "page-link" class to all links
+
+  $this->pagination->initialize($config); // Initialize pagination
+
+  // Get the current page from the URL
+  $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
+
+  // Fetch employees for the current page
+  $data['employees'] = $this->Admin_model->get_all_employees($per_page, $page);
+
+  // Generate pagination links
+  $data['pagination'] = $this->pagination->create_links();
+
+  // Load the view with employees and pagination links
+  $this->load->view('admin/manage_employees', $data);
+}
  //___________________________________________________________________________
    public function reports()
    {
