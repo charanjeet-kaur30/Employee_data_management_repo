@@ -25,7 +25,7 @@
         <?php endif; ?>
 
         <!-- Form Start -->
-        <form action="<?php echo base_url('EmployeeController/update_profile'); ?>" method="post">
+        <form action="<?php echo base_url('EmployeeController/update_profile'); ?>" method="post" enctype="multipart/form-data">
             <div class="form-group mb-3">
                 <label for="first_name" class="form-label">First Name</label>
                 <input type="text" class="form-control" id="first_name" name="first_name" 
@@ -62,6 +62,13 @@
                     value="<?php echo $user['dob']; ?>" required>
             </div>
 
+            <!-- Profile Image Upload -->
+
+            <div class="form-group mb-3">
+               <label for="profile_image" class="form-label">Upload Profile Image</label>
+               <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*">
+               </div> 
+<div class="clear"></div>
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
         <!-- Form End -->

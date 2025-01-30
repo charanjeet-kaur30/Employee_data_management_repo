@@ -40,7 +40,7 @@ function validateRegistrationForm() {
     let mobileNo = document.getElementById('mobile_no').value.trim();
     let dob = document.getElementById('dob').value.trim();
 
-    // Name Validation
+    // Name ...
     let nameRegex = /^[A-Za-z]+$/;
     if (!firstName) {
         showError('first_name', 'First Name is required.');
@@ -58,7 +58,7 @@ function validateRegistrationForm() {
         isValid = false;
     }
 
-    // Email Validation
+    // Email ...
     let emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email) {
         showError('email', 'Email is required.');
@@ -68,7 +68,7 @@ function validateRegistrationForm() {
         isValid = false;
     }
 
-    // City Validation
+    // City ...
     let cityRegex = /^[A-Za-z]+$/;
     if (!city) {
         showError('city', 'City is required.');
@@ -78,7 +78,7 @@ function validateRegistrationForm() {
         isValid = false;
     }
 
-    // Mobile Validation
+    // Mobile ...
     let phoneRegex = /^[0-9]{10}$/;
     if (!mobileNo) {
         showError('mobile_no', 'Mobile number is required.');
@@ -88,7 +88,7 @@ function validateRegistrationForm() {
         isValid = false;
     }
 
-    // Date of Birth Validation
+    // Date of Birth ....
     let currentDate = new Date();
     let dobDate = new Date(dob);
     if (!dob || isNaN(dobDate.getTime())) {
@@ -99,7 +99,7 @@ function validateRegistrationForm() {
         isValid = false;
     }
 
-    //  Password Validation
+    //  Password ...
     let passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!password) {
         showError('password', 'Password is required.');
@@ -109,7 +109,7 @@ function validateRegistrationForm() {
         isValid = false;
     }
 
-    //  Confirm Password Validation
+    //  Confirm Password ...
     if (password !== confirmPassword) {
         showError('confirm_password', 'Passwords do not match.');
         isValid = false;

@@ -64,7 +64,6 @@ class AuthController extends CI_Controller
         //Insert user into the database
         if ($this->User_model->insert_user($data)) 
         {
-            echo "hello hii";
             $this->session->set_flashdata('message', 'Registration successful. Please login.');
             redirect('AuthController/login_user'. $role_id);
         } 
@@ -73,7 +72,7 @@ class AuthController extends CI_Controller
             $this->session->set_flashdata('error', 'Registration failed. Please try again.');
             redirect('AuthController/register_user'. $role_id);
         }
-    } 
+    }
 
     }
 //______________________________________________________________________
@@ -135,7 +134,7 @@ class AuthController extends CI_Controller
         $this->session->sess_destroy();
         delete_cookie('email');
         delete_cookie('password');
-        redirect('AuthController/login_user');
+        redirect('HomeController/index');
       }
    //____________________________________________________________    
       
@@ -183,7 +182,7 @@ class AuthController extends CI_Controller
     
    }
    
-
+//______________________________________________________________________________________
 
       public function forgot_password()
       {

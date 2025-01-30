@@ -206,6 +206,30 @@ public function view_logs()
     $user_id = $this->session->userdata('user_id');
     $data = $this->input->post(); // Get all form data
 
+    if(!empty($_FILES['profile_image']['name']))
+    {
+      $config['upload_path'] = './uploads/profile_images/';
+      $config['allowed_types'] = 'jpg|jpeg|png';
+      $config['file_name'] = 'profile_' . $user_id . '_' . time();
+      $config['max_size'] = 2048;
+
+      $this->load->library('upload',$config);
+
+      if($this->upload->do_upload('profile_image'))
+      {
+         $uploadData = $this->upload->data();
+         $data['profile_image'] = 'uploads/profile_images/' . $uploadData['file_name'];
+         echo "image uploaded"; 
+      }
+      else
+      {
+        $this->session->set_flashdata('error', $this->upload->display_error());
+        redirect('employee/edit_profile');
+        return;
+      }
+    }
+
+     //database updation...
     if ($this->Employee_model->update_employee($user_id, $data)) 
     {
        $this->session->set_flashdata('success', 'Profile updated successfully!');
