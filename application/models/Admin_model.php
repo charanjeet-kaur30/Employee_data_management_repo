@@ -25,12 +25,47 @@ class Admin_model extends CI_Model
      return $this->db->update('users', $data);
    }
 
-   public function count_employees()
+   public function count_employees($user_id = null, $department_id = null)
    {
        // Count total employees with role_id = 2
-       $this->db->where('role_id', 2);
-       return $this->db->count_all_results('users'); // Return total count
+      //  $this->db->where('role_id', 2);
+      //  return $this->db->count_all_results('users'); // Return total count
+      $this->db->from('users');
+
+    // Apply filters if set
+    if ($user_id) {
+        $this->db->where('id', $user_id);
+    }
+    if ($department_id) {
+        $this->db->where('department_id', $department_id);
+    }
+
+    return $this->db->count_all_results();
    }
+
+
+   public function get_filtered_employees($user_id = null, $department_id = null, $limit = null, $offset = null)
+   {
+    $this->db->select('*');
+    $this->db->from('users');
+
+    // Apply filters if set
+    if ($user_id) {
+        $this->db->where('id', $user_id);
+    }
+    if ($department_id) {
+        $this->db->where('department_id', $department_id);
+    }
+
+    // Apply pagination
+    if ($limit && $offset) {
+        $this->db->limit($limit, $offset);
+    }
+
+    $query = $this->db->get();
+    return $query->result_array();
+   }
+
    
    public function get_all_employees($limit, $start)
    {

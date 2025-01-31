@@ -12,7 +12,17 @@
         <div class="d-flex justify-content-end">
         <a href="<?php echo base_url('admin/dashboard'); ?>" class="btn btn-secondary">Back to Dashboard</a>
     </div>
-    <img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">  
+
+    <!-- Display User Profile Image or Default Image -->
+    <?php if (!empty($user['profile_image'])): ?>
+    <img src="<?php echo base_url($user['profile_image']); ?>" 
+         alt="Profile Image" width="100" height="100" class="rounded-circle">
+<?php else: ?>
+    <img src="<?php echo base_url('assets/imgs/user.png'); ?>" 
+         alt="Default Profile Image" width="100" height="100" class="rounded-circle">
+<?php endif; ?>
+
+    <!-- <img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">   -->
         <h1 img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top" class="profile" >Your Profile</h1>
 
 <?php if ($this->session->flashdata('success')): ?>

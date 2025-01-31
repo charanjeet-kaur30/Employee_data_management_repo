@@ -65,36 +65,66 @@ public function profile()
       
     }
 
-   public function update_profile()
-   {
-    $user_id = $this->session->userdata('user_id');
-    $data = $this->input->post(); // Get all form data
-
-    if ($this->Admin_model->update_admin($user_id, $data)) 
+    public function update_profile()
     {
-       $this->session->set_flashdata('success', 'Profile updated successfully!');
-    }
-    else
+        $user_id = $this->session->userdata('user_id');
+        $data = $this->input->post(); // Get other form data
+    
+        if (!empty($_FILES['profile_image']['name'])) {
+            // Sanitize the uploaded filename (remove spaces and special characters)
+            $filename = $_FILES['profile_image']['name'];
+            $filename = preg_replace('/[^A-Za-z0-9_.-]/', '_', $filename); // Clean the filename
+    
+            // Configure upload settings
+            $config['upload_path'] = './uploads/profile_images/'; // Ensure folder exists
+            $config['allowed_types'] = 'jpg|jpeg|png';
+            $config['file_name'] = 'profile_' . $user_id . '_' . time() . '_' . $filename;
+            $config['max_size'] = 2048;
+    
+            $this->load->library('upload', $config);
+    
+            // Perform the file upload
+            if (!$this->upload->do_upload('profile_image')) {
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('admin/profile');
+                return;
+            }
+    
+            // Get the uploaded file's data
+            $uploadData = $this->upload->data();
+            $data['profile_image'] = 'uploads/profile_images/' . $uploadData['file_name']; // Store the correct path
+        }
+    
+        // Update the profile with the new data
+        if ($this->Admin_model->update_admin($user_id, $data)) {
+            $this->session->set_flashdata('success', 'Profile updated successfully!');
+        } else {
+            $this->session->set_flashdata('error', 'Failed to update profile.');
+        }
+    
+        redirect('admin/profile');
+    }    
+    
+
+   public function test_employee_count()
     {
-       $this->session->set_flashdata('error', 'Failed to update profile.');
-    }
-
-    redirect('admin/profile');
-   }
-
-   public function test_employee_count() {
     $this->load->model('Admin_model');
     $count = $this->Admin_model->count_employees();
     echo "Total employees: " . $count;
-}
+   }
    
+
 public function manage_employees() 
 {
   $this->load->model('Admin_model');
   $this->load->library('pagination'); // Load pagination library
 
+   // Get filter parameters.....
+   $user_id = $this->input->get('user_id');
+   $department_id = $this->input->get('department_id');
+
   $per_page = 6; // Number of employees per page
-  $total_rows = $this->Admin_model->count_employees(); // Get total employee count
+  $total_rows = $this->Admin_model->count_employees($user_id,$department_id); // Get total employee count
 
   // Pagination configuration
   $config['base_url'] = site_url('AdminController/manage_employees'); // Base URL
@@ -104,7 +134,7 @@ public function manage_employees()
   $config['num_links'] = 3; // Number of links to show around the current page
 
   $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">'; // Open wrapper
-$config['full_tag_close'] = '</ul></nav>'; // Close wrapper
+  $config['full_tag_close'] = '</ul></nav>'; // Close wrapper
 
 $config['first_tag_open'] = '<li class="page-item">';
 $config['first_tag_close'] = '</li>';
@@ -129,11 +159,15 @@ $config['attributes'] = ['class' => 'page-link']; // Add "page-link" class to al
   // Get the current page from the URL
   $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-  // Fetch employees for the current page
-  $data['employees'] = $this->Admin_model->get_all_employees($per_page, $page);
+  // Fetch filtered employees for the current page
+  $data['employees'] = $this->Admin_model->get_filtered_employees($user_id, $department_id, $per_page, $page);
 
   // Generate pagination links
   $data['pagination'] = $this->pagination->create_links();
+
+    // Pass filter data to the view
+    $data['user_id'] = $user_id;
+    $data['department_id'] = $department_id;
 
   // Load the view with employees and pagination links
   $this->load->view('admin/manage_employees', $data);

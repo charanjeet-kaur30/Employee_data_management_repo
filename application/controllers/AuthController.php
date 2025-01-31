@@ -14,11 +14,10 @@ class AuthController extends CI_Controller
         $this->load->helper('cookie');
         $this->load->library('email');
         $this->load->helper('form');
-
     }
  
     public function register_user($role_id = 2)   // Default to 2 (Employee) if no role is passed
-    {
+    { 
         $this->form_validation->set_rules('first_name', 'First Name', 'required|alpha');
         $this->form_validation->set_rules('last_name', 'Last Name', 'required|alpha');
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
@@ -27,10 +26,15 @@ class AuthController extends CI_Controller
         $this->form_validation->set_rules('mobile_no', 'Mobile No', 'required|numeric');
         $this->form_validation->set_rules('dob', 'D.O.B', 'required');
 
+        $departments = $this->User_model->get_departments();
+           
+        // Pass departments to the view
+        $data['departments'] = $departments;
+
       if ($this->form_validation->run() == FALSE) 
       {
         // Reload the registration view with error messages
-        $this->load->view('auth/register',['role_id' => $role_id]);
+        $this->load->view('auth/register',['role_id' => $role_id, 'departments' => $departments]);
       } 
       else 
       {
@@ -41,6 +45,7 @@ class AuthController extends CI_Controller
         $city= $this->input->post('city');
         $mobile_no= $this->input->post('mobile_no');
         $dob= $this->input->post('dob');
+        $department_id= $this->input->post('department_id');
         $confirm_password = $this->input->post('confirm_password');
          // Use the passed or default role_id
          $role_id = $this->input->post('role_id') ?: $role_id;  // If no role_id is passed, use the default
@@ -57,6 +62,7 @@ class AuthController extends CI_Controller
         'mobile_no'=> $mobile_no,
         'dob'=>  $dob,
         'role_id' => $role_id, 
+        'department_id' => $department_id,
         'created_at' => date('Y-m-d H:i:s'),
         'updated_at' => date('Y-m-d H:i:s')
         ];
@@ -65,18 +71,18 @@ class AuthController extends CI_Controller
         if ($this->User_model->insert_user($data)) 
         {
             $this->session->set_flashdata('message', 'Registration successful. Please login.');
-            redirect('AuthController/login_user'. $role_id);
+            redirect('AuthController/login_user/'. $role_id);
         } 
         else 
         {
             $this->session->set_flashdata('error', 'Registration failed. Please try again.');
-            redirect('AuthController/register_user'. $role_id);
+            redirect('AuthController/register_user/'. $role_id);
         }
     }
 
     }
 //______________________________________________________________________
-    public function login_user($role_id = null)
+    public function login_user($role_id =2)
     {
         // If a role_id is passed via the URL, store it in the session, or fall back to the session
     if ($role_id !== null) 
@@ -134,7 +140,7 @@ class AuthController extends CI_Controller
         $this->session->sess_destroy();
         delete_cookie('email');
         delete_cookie('password');
-        redirect('HomeController/index');
+        redirect('auth/login');
       }
    //____________________________________________________________    
       

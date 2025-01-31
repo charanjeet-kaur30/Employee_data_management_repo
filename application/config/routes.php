@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
  $route['default_controller'] = 'HomeController/index';
  $route['about'] = 'HomeController/about';
- $route['login'] = 'AuthController/login_user';
+ $route['auth/login'] = 'AuthController/login_user';
  $route['register'] = 'AuthController/register_user';
  $route['auth/forgot_password'] = 'AuthController/forgot_password';
  $route['reset_password/(:any)'] = 'AuthController/reset_password/$1';

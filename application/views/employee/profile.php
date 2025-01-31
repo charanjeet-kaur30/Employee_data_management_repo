@@ -12,10 +12,8 @@
         <div class="d-flex justify-content-end">
         <a href="<?php echo base_url('employee/dashboard'); ?>" class="btn btn-secondary">Back to Dashboard</a>
     </div>
+    
       <!-- Display User Profile Image or Default Image -->
-      <!-- <img src="<?php echo base_url('uploads/profile_images/' . (!empty($user['profile_image']) ? $user['profile_image'] : 'assets/imgs/user.png')); ?>" 
-     alt="Profile Image" width="100" height="100" class="rounded-circle"> -->
-
      <?php if (!empty($user['profile_image'])): ?>
     <img src="<?php echo base_url($user['profile_image']); ?>" 
          alt="Profile Image" width="100" height="100" class="rounded-circle">

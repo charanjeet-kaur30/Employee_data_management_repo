@@ -13,6 +13,30 @@
         <a href="<?php echo base_url('admin/dashboard'); ?>" class="btn btn-secondary">Back to Dashboard</a>
     </div>
     <h1>All Employees</h1>
+
+   <!-- Filter Form -->
+   <form method="get" action="<?php echo base_url('AdminController/manage_employees'); ?>" class="mb-4">
+        <div class="row">
+            <div class="col-md-3">
+                <input type="number" name="user_id" class="form-control" placeholder="Filter by User ID" value="<?php echo isset($user_id) ? $user_id : ''; ?>">
+            </div>
+            <div class="col-md-3">
+                <select name="department_id" class="form-control">
+                    <option value="">Select Department</option>
+                    <?php foreach ($departments as $department): ?>
+                        <option value="<?php echo $department['id']; ?>" <?php echo isset($department_id) && $department_id == $department['id'] ? 'selected' : ''; ?>>
+                            <?php echo $department['name']; ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">Apply Filters</button>
+            </div>
+        </div>
+    </form>
+
+
 <?php if ($this->session->flashdata('success')): ?>
     <div class="alert alert-success"><?php echo $this->session->flashdata('success'); ?></div>
 <?php elseif ($this->session->flashdata('error')): ?>

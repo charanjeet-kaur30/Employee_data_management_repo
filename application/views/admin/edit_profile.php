@@ -62,6 +62,14 @@
                     value="<?php echo $user['dob']; ?>" required>
             </div>
 
+   <!-- Profile Image Upload -->
+
+   <div class="form-group mb-3">
+               <label for="profile_image" class="form-label">Upload Profile Image</label>
+               <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*">
+               </div> 
+<div class="clear"></div>
+
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>
         <!-- Form End -->
