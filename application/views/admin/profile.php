@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Profile</title>
+    <title>Admin Profile</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
 </head>
@@ -12,9 +12,9 @@
         <div class="d-flex justify-content-end">
         <a href="<?php echo base_url('admin/dashboard'); ?>" class="btn btn-secondary">Back to Dashboard</a>
     </div>
-
-    <!-- Display User Profile Image or Default Image -->
-    <?php if (!empty($user['profile_image'])): ?>
+    
+      <!-- Display User Profile Image or Default Image -->
+     <?php if (!empty($user['profile_image'])): ?>
     <img src="<?php echo base_url($user['profile_image']); ?>" 
          alt="Profile Image" width="100" height="100" class="rounded-circle">
 <?php else: ?>
@@ -22,7 +22,6 @@
          alt="Default Profile Image" width="100" height="100" class="rounded-circle">
 <?php endif; ?>
 
-    <!-- <img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">   -->
         <h1 img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top" class="profile" >Your Profile</h1>
 
 <?php if ($this->session->flashdata('success')): ?>
@@ -73,6 +72,7 @@
     </div>
 </div>
 
+<!-- Navigation Buttons -->
 <div class="mt-4">
     <a href="<?php echo site_url('admin/edit_profile'); ?>" class="btn btn-primary">Edit Profile</a>
 </div>

@@ -82,7 +82,6 @@ class EmployeeController extends CI_Controller
         // Convert the time to a valid datetime format
         $start_time = date('Y-m-d H:i:s', strtotime($start_time));
         $end_time = date('Y-m-d H:i:s', strtotime($end_time));
-
        
              $log_data = [
                  'log_content' => $log_content,
@@ -182,7 +181,6 @@ public function view_logs()
         $this->session->set_flashdata('error', 'Profile not found!');
         redirect('employee/dashboard'); // Redirect if user not found
       }
-  
         $this->load->view('employee/profile', $data);
     }
 
@@ -198,7 +196,6 @@ public function view_logs()
       }
   
       $this->load->view('employee/edit_profile', $data);
-      
     }
 
    public function update_profile()
@@ -206,6 +203,7 @@ public function view_logs()
     $user_id = $this->session->userdata('user_id');
     $data = $this->input->post(); // Get all form data
 
+    echo $data['profile_image'];
     if(!empty($_FILES['profile_image']['name']))
     {
       $config['upload_path'] = './uploads/profile_images/';
@@ -219,7 +217,7 @@ public function view_logs()
       {
          $uploadData = $this->upload->data();
          $data['profile_image'] = 'uploads/profile_images/' . $uploadData['file_name'];
-         echo "image uploaded"; 
+         log_message('debug', 'Profile image path: ' . $data['profile_image']);
       }
       else
       {
@@ -241,8 +239,5 @@ public function view_logs()
 
     redirect('employee/profile');
    }
-
-
-
 }
 ?>

@@ -42,10 +42,10 @@
                         <?php if (!empty($user['profile_image'])): ?>
                            <img src="<?php echo base_url($user['profile_image']); ?>" 
                            alt="Profile Image" width="42" height="42" class="rounded-circle">
-                       <?php else: ?>
+                        <?php else: ?>
                           <img src="<?php echo base_url('assets/imgs/user.png'); ?>" 
                           alt="Default Profile Image" width="42" height="42" class="rounded-circle">
-                       <?php endif; ?>
+                        <?php endif; ?>
 
                         <h5 class="card-title">Your Profile</h5>
                         <p class="card-text">View and update your personal information.</p>

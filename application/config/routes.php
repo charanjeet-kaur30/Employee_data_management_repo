@@ -68,6 +68,7 @@ $route['admin/edit_profile'] = 'AdminController/edit_profile';
 $route['admin/employee_management'] = 'AdminController/manage_employees';
 $route['admin/reports'] = 'AdminController/reports';
 $route['admin/add_report'] = 'AdminController/add_report';
+$route['AdminController/download_report/(:num)'] = 'AdminController/download_report/$1';
 
 $route['migrate'] = 'MigrationController';
  //echo date("Ymdhis");

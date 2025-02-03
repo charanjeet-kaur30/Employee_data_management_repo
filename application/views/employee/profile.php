@@ -14,13 +14,13 @@
     </div>
     
       <!-- Display User Profile Image or Default Image -->
-     <?php if (!empty($user['profile_image'])): ?>
+    <?php if (!empty($user['profile_image'])): ?>
     <img src="<?php echo base_url($user['profile_image']); ?>" 
          alt="Profile Image" width="100" height="100" class="rounded-circle">
-<?php else: ?>
+    <?php else: ?>
     <img src="<?php echo base_url('assets/imgs/user.png'); ?>" 
          alt="Default Profile Image" width="100" height="100" class="rounded-circle">
-<?php endif; ?>
+    <?php endif; ?>
 
         <h1 img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top" class="profile" >Your Profile</h1>
 

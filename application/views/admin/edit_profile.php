@@ -14,8 +14,7 @@
             <a href="<?php echo base_url('admin/profile'); ?>" class="btn btn-secondary">Back to Profile</a>
             </div>
             <img src="<?php echo base_url('assets/imgs/edit-profile.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">
-            <h1 img src="<?php echo base_url('assets/imgs/edit-profile.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">Edit Profile</h1>
-       
+            <h1 img src="<?php echo base_url('assets/imgs/edit-profile.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">Edit Profile</h1>    
 
         <!-- Flash Messages -->
         <?php if ($this->session->flashdata('success')): ?>
