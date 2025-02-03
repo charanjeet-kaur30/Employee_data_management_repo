@@ -17,7 +17,17 @@
             Admin Dashboard</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
-                <img src="<?= base_url('assets/imgs/user.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
+
+                 <!-- Image Display -->
+                 <?php if (!empty($user['profile_image'])): ?>
+                           <img src="<?php echo base_url($user['profile_image']); ?>" 
+                           alt="Profile Image" width="42" height="42" class="rounded-circle">
+                       <?php else: ?>
+                          <img src="<?php echo base_url('assets/imgs/user.png'); ?>" 
+                          alt="Default Profile Image" width="42" height="42" class="rounded-circle">
+                       <?php endif; ?>
+
+                <!-- <img src="<?= base_url('assets/imgs/user.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">   -->
                     <li class="nav-item"><a class="nav-link" href="<?php echo site_url('admin/profile')?>">Profile</a></li>
                 <img src="<?php echo base_url('assets/imgs/logout.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">    
                     <li class="nav-item"><a class="nav-link" href="<?php echo site_url('AuthController/logout')?>">Logout</a></li>
@@ -41,7 +51,7 @@
             <div class="col-md-4">
                 <div class="card bg-primary text-white">
                     <div class="card-body">
-                    <img src="<?php echo base_url('assets/imgs/profile.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
+                    <img src="<?php echo base_url('assets/imgs/profile.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">  
                         <h5 class="card-title">Employee Management</h5>
                         <p class="card-text">View and manage employee records.</p>
                         <a href="<?php echo site_url('admin/employee_management')?>" class="btn btn-light">Manage Employees</a>
@@ -52,7 +62,7 @@
             <div class="col-md-4">
                 <div class="card bg-dark text-white">
                     <div class="card-body">
-                    <img src="<?php echo base_url('assets/imgs/report.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
+                    <img src="<?php echo base_url('assets/imgs/report.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">  
                         <h5 class="card-title">Reports</h5>
                         <p class="card-text">Generate and review system reports.</p>
                         <a href="<?php echo site_url('admin/reports')?>" class="btn btn-light">View Reports</a>

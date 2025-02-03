@@ -14,8 +14,7 @@
             <a href="<?php echo base_url('admin/profile'); ?>" class="btn btn-secondary">Back to Profile</a>
             </div>
             <img src="<?php echo base_url('assets/imgs/edit-profile.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">
-            <h1 img src="<?php echo base_url('assets/imgs/edit-profile.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">Edit Profile</h1>
-       
+            <h1 img src="<?php echo base_url('assets/imgs/edit-profile.png'); ?>" alt="Logo" width="50" height="50" class="d-inline-block align-top">Edit Profile</h1>    
 
         <!-- Flash Messages -->
         <?php if ($this->session->flashdata('success')): ?>
@@ -61,6 +60,14 @@
                 <input type="date" class="form-control" id="dob" name="dob" 
                     value="<?php echo $user['dob']; ?>" required>
             </div>
+
+   <!-- Profile Image Upload -->
+
+   <div class="form-group mb-3">
+               <label for="profile_image" class="form-label">Upload Profile Image</label>
+               <input type="file" class="form-control" id="profile_image" name="profile_image" accept="image/*">
+               </div> 
+<div class="clear"></div>
 
             <button type="submit" class="btn btn-primary">Save Changes</button>
         </form>

@@ -22,6 +22,14 @@ class User_model extends CI_Model
           return false;  // Return false if no data was provided
       }
 
+     //GET Departments...
+     public function get_departments()
+     {
+      $query = $this->db->get('departments');
+      return $query->result_array();
+     }
+
+
     // Fetch user by email for login
     public function get_user_by_email($email) 
     {

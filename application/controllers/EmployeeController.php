@@ -82,7 +82,6 @@ class EmployeeController extends CI_Controller
         // Convert the time to a valid datetime format
         $start_time = date('Y-m-d H:i:s', strtotime($start_time));
         $end_time = date('Y-m-d H:i:s', strtotime($end_time));
-
        
              $log_data = [
                  'log_content' => $log_content,
@@ -182,7 +181,6 @@ public function view_logs()
         $this->session->set_flashdata('error', 'Profile not found!');
         redirect('employee/dashboard'); // Redirect if user not found
       }
-  
         $this->load->view('employee/profile', $data);
     }
 
@@ -198,7 +196,6 @@ public function view_logs()
       }
   
       $this->load->view('employee/edit_profile', $data);
-      
     }
 
    public function update_profile()
@@ -206,6 +203,31 @@ public function view_logs()
     $user_id = $this->session->userdata('user_id');
     $data = $this->input->post(); // Get all form data
 
+    echo $data['profile_image'];
+    if(!empty($_FILES['profile_image']['name']))
+    {
+      $config['upload_path'] = './uploads/profile_images/';
+      $config['allowed_types'] = 'jpg|jpeg|png';
+      $config['file_name'] = 'profile_' . $user_id . '_' . time();
+      $config['max_size'] = 2048;
+
+      $this->load->library('upload',$config);
+
+      if($this->upload->do_upload('profile_image'))
+      {
+         $uploadData = $this->upload->data();
+         $data['profile_image'] = 'uploads/profile_images/' . $uploadData['file_name'];
+         log_message('debug', 'Profile image path: ' . $data['profile_image']);
+      }
+      else
+      {
+        $this->session->set_flashdata('error', $this->upload->display_error());
+        redirect('employee/edit_profile');
+        return;
+      }
+    }
+
+     //database updation...
     if ($this->Employee_model->update_employee($user_id, $data)) 
     {
        $this->session->set_flashdata('success', 'Profile updated successfully!');
@@ -217,8 +239,5 @@ public function view_logs()
 
     redirect('employee/profile');
    }
-
-
-
 }
 ?>

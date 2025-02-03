@@ -37,7 +37,16 @@
             <div class="col-md-4">
                 <div class="card bg-success text-white">
                     <div class="card-body">
-                        <img src="<?php echo base_url('assets/imgs/user.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
+                        
+                        <!-- Image Display -->
+                        <?php if (!empty($user['profile_image'])): ?>
+                           <img src="<?php echo base_url($user['profile_image']); ?>" 
+                           alt="Profile Image" width="42" height="42" class="rounded-circle">
+                        <?php else: ?>
+                          <img src="<?php echo base_url('assets/imgs/user.png'); ?>" 
+                          alt="Default Profile Image" width="42" height="42" class="rounded-circle">
+                        <?php endif; ?>
+
                         <h5 class="card-title">Your Profile</h5>
                         <p class="card-text">View and update your personal information.</p>
                         <a href="<?php echo site_url('employee/profile'); ?>" class="btn btn-light">Manage Profile</a>
@@ -47,7 +56,7 @@
             <div class="col-md-4">
                 <div class="card bg-info text-white">
                     <div class="card-body">
-                    <img src="<?= base_url('assets/imgs/log.png'); ?>" alt="Logo" width="32" height="35" class="d-inline-block align-top">  
+                    <img src="<?= base_url('assets/imgs/log.png'); ?>" alt="Logo" width="40" height="40" class="d-inline-block align-top">  
                         <h5 class="card-title">Your Logs</h5>
                         <p class="card-text">View and Manage your daily logs.</p>
                         <a  href="<?php echo site_url('employee/view_logs'); ?>" class="btn btn-light">All Logs</a>

@@ -1,9 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 9968d61c42698dbee426e1bea50aa70b3b596bd7
+=======
+require_once FCPATH . 'vendor/autoload.php';
+use Dompdf\Dompdf;
+>>>>>>> 7aa65fdfecc1384607708bc177438ca3cae8d247
 
 class AdminController extends CI_Controller
 {
@@ -17,6 +22,7 @@ class AdminController extends CI_Controller
      $this->load->model('Admin_model');
      $this->load->library('session');
      $this->load->library('pagination');
+     $this->load->library('pdf'); // Load the PDF library
    }
 
    public function dashboard()
@@ -40,8 +46,8 @@ class AdminController extends CI_Controller
    }
 
 //____________________________________________________________________________
-public function profile()
-    {
+   public function profile()
+   {
       $user_id = $this->session->userdata('user_id'); //  user ID from session..
       $data['user'] = $this->Admin_model->get_admin_by_id($user_id); //user's data  Retrieved ..
   
@@ -51,8 +57,8 @@ public function profile()
         redirect('admin/dashboard'); // Redirect if user not found
       }
   
-        $this->load->view('admin/profile', $data);
-    }
+      $this->load->view('admin/profile', $data);
+   }
 
     public function edit_profile()
     {
@@ -69,36 +75,71 @@ public function profile()
       
     }
 
-   public function update_profile()
-   {
-    $user_id = $this->session->userdata('user_id');
-    $data = $this->input->post(); // Get all form data
-
-    if ($this->Admin_model->update_admin($user_id, $data)) 
+    public function update_profile()
     {
-       $this->session->set_flashdata('success', 'Profile updated successfully!');
+     $user_id = $this->session->userdata('user_id');
+     $data = $this->input->post(); // Get all form data
+ 
+     if(!empty($_FILES['profile_image']['name']))
+     {
+      echo "hello";
+       $config['upload_path'] = './uploads/profile_images/';
+       $config['allowed_types'] = 'jpg|jpeg|png';
+       $config['file_name'] = 'profile_' . $user_id . '_' . time();
+       $config['max_size'] = 2048;
+ 
+       $this->load->library('upload',$config);
+ 
+       if($this->upload->do_upload('profile_image'))
+       {
+
+          $uploadData = $this->upload->data();
+          $data['profile_image'] = 'uploads/profile_images/' . $uploadData['file_name'];
+          print_r($data['profile_image']);
+          exit;
+          echo "image uploaded"; 
+       }
+       else
+       {
+         $this->session->set_flashdata('error', $this->upload->display_error());
+         redirect('admin/edit_profile');
+         return;
+       }
+     }
+ 
+      //database updation...
+     if ($this->Admin_model->update_admin($user_id, $data)) 
+     {
+        $this->session->set_flashdata('success', 'Profile updated successfully!');
+     }
+     else
+     {
+        $this->session->set_flashdata('error', 'Failed to update profile!');
+     }
+ 
+     redirect('admin/profile');
     }
-    else
+ 
+
+   public function test_employee_count()
     {
-       $this->session->set_flashdata('error', 'Failed to update profile.');
-    }
-
-    redirect('admin/profile');
-   }
-
-   public function test_employee_count() {
     $this->load->model('Admin_model');
     $count = $this->Admin_model->count_employees();
     echo "Total employees: " . $count;
-}
-   
+   }
+ 
+
 public function manage_employees() 
 {
   $this->load->model('Admin_model');
   $this->load->library('pagination'); // Load pagination library
 
-  $per_page = 6; // Number of employees per page
-  $total_rows = $this->Admin_model->count_employees(); // Get total employee count
+   // Get filter parameters.....
+  $user_id = $this->input->get('user_id');
+  $department_id = $this->input->get('department_id');
+
+  $per_page = 4; // Number of employees per page
+  $total_rows = $this->Admin_model->count_employees($user_id,$department_id); // Get total employee count
 
   // Pagination configuration
   $config['base_url'] = site_url('AdminController/manage_employees'); // Base URL
@@ -108,36 +149,43 @@ public function manage_employees()
   $config['num_links'] = 3; // Number of links to show around the current page
 
   $config['full_tag_open'] = '<nav><ul class="pagination justify-content-center">'; // Open wrapper
-$config['full_tag_close'] = '</ul></nav>'; // Close wrapper
+  $config['full_tag_close'] = '</ul></nav>'; // Close wrapper
 
-$config['first_tag_open'] = '<li class="page-item">';
-$config['first_tag_close'] = '</li>';
-$config['last_tag_open'] = '<li class="page-item">';
-$config['last_tag_close'] = '</li>';
+  $config['first_tag_open'] = '<li class="page-item">';
+  $config['first_tag_close'] = '</li>';
+  $config['last_tag_open'] = '<li class="page-item">';
+  $config['last_tag_close'] = '</li>';
 
-$config['next_tag_open'] = '<li class="page-item">';
-$config['next_tag_close'] = '</li>';
-$config['prev_tag_open'] = '<li class="page-item">';
-$config['prev_tag_close'] = '</li>';
+  $config['next_tag_open'] = '<li class="page-item">';
+  $config['next_tag_close'] = '</li>';
+  $config['prev_tag_open'] = '<li class="page-item">';
+  $config['prev_tag_close'] = '</li>';
+ 
+  $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link">';
+  $config['cur_tag_close'] = '</a></li>';
 
-$config['cur_tag_open'] = '<li class="page-item active"><a class="page-link">';
-$config['cur_tag_close'] = '</a></li>';
+  $config['num_tag_open'] = '<li class="page-item">';
+  $config['num_tag_close'] = '</li>';
 
-$config['num_tag_open'] = '<li class="page-item">';
-$config['num_tag_close'] = '</li>';
-
-$config['attributes'] = ['class' => 'page-link']; // Add "page-link" class to all links
+  $config['attributes'] = ['class' => 'page-link']; // Add "page-link" class to all links
 
   $this->pagination->initialize($config); // Initialize pagination
 
   // Get the current page from the URL
   $page = ($this->uri->segment(3)) ? $this->uri->segment(3) : 0;
 
-  // Fetch employees for the current page
-  $data['employees'] = $this->Admin_model->get_all_employees($per_page, $page);
+  // Fetch filtered employees for the current page
+  $data['employees'] = $this->Admin_model->get_filtered_employees($user_id, $department_id, $per_page, $page);
 
   // Generate pagination links
   $data['pagination'] = $this->pagination->create_links();
+
+     // Fetch all departments for dropdown
+     $data['departments'] = $this->Admin_model->get_all_departments();
+
+    // Pass filter data to the view
+    $data['user_id'] = $user_id;
+    $data['department_id'] = $department_id;
 
   // Load the view with employees and pagination links
   $this->load->view('admin/manage_employees', $data);
@@ -188,40 +236,23 @@ $config['attributes'] = ['class' => 'page-link']; // Add "page-link" class to al
        redirect('AdminController/reports');
      }
 
-     //dynamic content for downloading file...
-    //  $content = "Report Details\n";
-    //  $content .= "--------------------------\n";
-    //  $content .= "Title: " . $report['title'] . "\n";
-    //  $content .= "Description: " . $report['description'] . "\n";
-    //  $content .= "Date: " . $report['date'] . "\n"; 
+    // Prepare data to pass to the view
+    $data = ['report' => $report];
 
-    $html_content = "
-    <h1>Report Details</h1>
-    <hr>
-    <p><strong>Title:</strong> {$report['title']}</p>
-    <p><strong>Description:</strong> {$report['description']}</p>
-    <p><strong>Date:</strong> {$report['date']}</p>
-";
+    $html_content = $this->load->view('admin/report_view', $data, TRUE);
 
-  // Create Dompdf instance
-  $dompdf = new Dompdf();
-  $dompdf->loadHtml($html_content);
+    // Load HTML content
+    $dompdf = new Dompdf();
+    $dompdf->loadHtml($html_content);
 
-  // Set paper size and orientation
-  $dompdf->setPaper('A4', 'portrait');
+    // Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
 
-  // Render the PDF
-  $dompdf->render();
+    // Render the PDF
+    $dompdf->render();
 
-  // Download the generated PDF
-  $dompdf->stream("report_{$id}.pdf", array("Attachment" => 1));
-
-     //file name...
-    //  $file_name = 'Report_' . $id . '.txt';
-
-    //  $this->load->helper('download');
-    //  force_download($file_name, $content);
-    //  $this->load->library('dompdf_gen');
+    // Output the generated PDF (1 = download and 0 = preview)
+    $dompdf->stream("report_{$id}.pdf", array("Attachment" => 1));
    }
 }
 ?>

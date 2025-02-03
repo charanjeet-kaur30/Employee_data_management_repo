@@ -76,6 +76,13 @@
                 <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
             </div>
 
+            <select name="department_id" class="form-control" required>
+    <option value="">Select Department</option>
+    <?php foreach ($departments as $department): ?>
+        <option value="<?= $department['id']; ?>"><?= $department['name']; ?></option>
+    <?php endforeach; ?>
+</select>
+
             <div class="clear"></div>
 
             <!-- Hidden Role Input Field -->
